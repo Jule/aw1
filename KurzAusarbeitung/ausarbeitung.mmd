@@ -2,6 +2,12 @@ Base Header Level:  3
 
 # Thematic overview
 
-As modern embedded applications evolve, their performance requirements increase. Due to the limitations of embedded platforms, such as constraints in power consumption and heat dissipation, these increased performance requiresments cannot be met by simply increasing processor clock rates. As a result, modern embedded processors, such as the Dual Core Cortex-A9 shipped on the Xilinx Zynq platform, do not only feature more than a single processing core, but also provide support for hardware level parallelism, for example by using "Single Instruction - Multiple Data" (SIMD) techniques. <!--\citep{Kejariwal2009}-->
+As modern embedded applications evolve, their performance requirements increase. Due to the limitations of embedded platforms, such as constraints in power consumption and heat dissipation, these increased performance requiresments cannot be met by simply increasing processor clock rates. As a result, modern embedded processors, such as the Dual Core Cortex-A9 shipped on the Xilinx Zynq platform, do not only feature more than a single processing core, but also provide support for hardware level parallelism, for example by using "Single Instruction - Multiple Data" (SIMD) techniques <!--\citep{Kejariwal2009}-->.
 
+---
 
+TODO: Add section on parallelism techniques
+
+---
+
+The Go programming language, being a relatively young language, was conceived, among other things, to allow for a more productive development environment for highly concurrent applications. While it is possible to write parallel applications in many of the programming languages widely in use today, none of them were specifically built around the concept of concurrency. <!--\citep{Pike2012}--> The hypothesis is thus, that by using the Go programming language to develop parallel applications on embedded platforms, one can increase developer productiveness by allowing the language to take care of tasks such as thread scheduling and memory management. Given that said features come at the cost of performance, another hypothesis that requires confirmation is that the overhead that the usage of Go introduces on an embedded platform is less than the benefit that its usage provides.
