@@ -4,23 +4,38 @@
 % Begin: Author and Document Information
 %
 
-\newcommand{\documentTitle}{Assignment Title}
-\newcommand{\documentSubtitle}{The Subtitle}
+\newcommand{\documentTitle}{Evaluation of techniques for parallelism on embedded platforms}
+\newcommand{\documentSubtitle}{}
 \newcommand{\documentDate}{ \today }
 
 \newcommand{\documentAuthor}{
-    \textbf{John Q. Student}
+    \textbf{Lucas Jenß} \\ Betreuung: Prof. Schwarz
 }
 
-\newcommand{\documentShortAuthor}{J.Q. Student}
+\newcommand{\documentShortAuthor}{Jenß}
+
+% Use Helvetica (Neue)
+\UseHelveticaNeuetrue
 
 %
 % End: Author and Document Information
 %
 
+\usepackage{natbib}
+
+% Use local, modified (so that it includes url access date) bibliography style
+\bibliographystyle{bibliography/x3-dcu/x3-dcu}
+
+% Fix bibtex/natbib/whatever not using \url for urls, as described on
+% http://tex.stackexchange.com/questions/9445/urls-break-compilation
+\renewcommand{\harvardurl}[1]{\textbf{URL:} \url{#1}}
+
 \input{x3-assignment-begin}
 
     % Must be generated from Markdown!
     \input{ausarbeitung.tex}
+
+\newpage
+\bibliography{bibliography/bibliography}
 
 \input{x3-assignment-end}
