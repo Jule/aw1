@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mmd2tex ausarbeitung.mmd && \
+    omgtex.rb -o wrap.tex
