@@ -4,7 +4,7 @@
 % Begin: Author and Document Information
 %
 
-\newcommand{\documentTitle}{Evaluation of techniques for parallelism on embedded platforms}
+\newcommand{\documentTitle}{Evaluation of parallelism techniques on embedded multi-core platforms}
 \newcommand{\documentSubtitle}{}
 \newcommand{\documentDate}{ \today }
 
@@ -12,7 +12,7 @@
     \textbf{Lucas Jenß} \\ Betreuung: Prof. Schwarz
 }
 
-\newcommand{\documentShortAuthor}{Jenß}
+\newcommand{\documentShortAuthor}{}
 
 % Use Helvetica (Neue)
 \UseHelveticaNeuetrue
@@ -30,12 +30,16 @@
 % http://tex.stackexchange.com/questions/9445/urls-break-compilation
 \renewcommand{\harvardurl}[1]{\textbf{URL:} \url{#1}}
 
+\newcommand{\fig}[2]{%
+  \vspace{\parskip}%
+  \begin{center}%
+    \includegraphics[#1]{figures/#2}%
+  \end{center}%
+}
+
 \input{x3-assignment-begin}
 
     % Must be generated from Markdown!
     \input{ausarbeitung.tex}
-
-\newpage
-\bibliography{bibliography/bibliography}
 
 \input{x3-assignment-end}
