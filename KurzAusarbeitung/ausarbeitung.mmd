@@ -4,17 +4,24 @@ Base Header Level:  3
 
 As modern embedded applications evolve, their performance requirements increase. Due to the limitations of embedded platforms, such as constraints in power consumption and heat dissipation, these increased performance requirements cannot be met by increasing processor clock rates. Consequently, modern embedded processors, such as the Dual Core Cortex-A9 shipped on the Xilinx Zynq platform, do not only feature more than a single processing core, but also provide support for hardware level parallelism, for example by using "Single Instruction - Multiple Data" (SIMD) techniques which are especially well suited for media and signal processing <!--\citep{Kejariwal2009}-->. Since it is not possible to automatically parallelize existing applications, they need to be redesigned to take advantage of the platform enhancements.
 
-The process of (re-)designing an application for parallelism involves finding *exploitable concurrency*, by analyzing the problem at hand, decomposing it into subproblems that can **safely execute at the same time**, based on which a parallel algorithm can be designed and implemented <!--\citep{Mattson2010}-->.
+The process of (re-)designing an application for parallelism involves finding *exploitable concurrency*, by analyzing the problem at hand, decomposing it into subproblems that can **safely execute at the same time**, based on which a parallel algorithm can be designed and implemented <!--\citep{Mattson2010}-->. In the context of the FAUST project, a concrete application in need of parallelization is an obstacle detection system using a laser scanner. The system is depicted in <!--\autoref{fig:application}-->.
 
 <!--\todo{expand on parallel algorithms}-->
 
-The Go programming language was conceived, among other things, to allow for a more productive development environment for highly concurrent applications. While it is possible to write concurrent applications in many of the programming languages widely in use today, very few of them were specifically built around the concept of concurrency. <!--\citep{Pike2012}--> The hypothesis is thus, that by using the Go programming language to develop parallel applications on embedded platforms, one can increase developer productiveness by allowing the language to take care of tasks such as thread scheduling and memory management. Given that said features come at the cost of performance, another hypothesis that requires confirmation is that the overhead that the usage of Go introduces on an embedded platform is insignificant compared to the benefit that its usage provides.
+The Go programming language was conceived, among other things, to allow for a more productive development environment for highly concurrent applications. <!--\todo{more productive compared to what?}--> While it is possible to write concurrent applications in many of the programming languages widely in use today, very few of them were specifically built around the concept of concurrency. <!--\citep{Pike2012}--> The hypothesis is thus, that by using the Go programming language to develop parallel applications on embedded platforms, one can increase developer productiveness by allowing the language to take care of tasks such as thread scheduling and memory management. Given that said features come at the cost of performance, another hypothesis that requires confirmation is that the overhead that the usage of Go introduces on an embedded platform is insignificant compared to the benefit that its usage provides.
 
-<!--\todo{Konsequenzen für AW1/AW2/PJ? Ziel angeben!}-->
+In the course of AW1 and AW2, these hypotheses will be evaluated by extracting performance critical elements from the mentioned FAUST application and implementing them in Go. These implementations will then be compared to their original (non-parallelized) counterparts as well as parellized C implementations. Both performance and ease of implementation/implementation complexity will be compared.
 
 <!--
 \clearpage
-\fig{width=\textwidth}{ZynqPlatformAnwendung}
+%\figur{width=0.9\textwidth}{ZynqPlatformAnwendung}{Obstacle detection on the Zynq Platform}{fig:application}
+
+\begin{figure}[htbp]%
+\centering%
+\includegraphics[keepaspectratio,width=0.9\textwidth]{figures/ZynqPlatformAnwendung}
+\caption{Obstacle detection on the Zynq Platform}
+\label{fig:application}
+\end{figure}
 
 \bibliography{bibliography/bibliography}
 -->

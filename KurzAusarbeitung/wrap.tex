@@ -1,4 +1,15 @@
-\input{x3-assignment-preamble}
+\documentclass[a4paper,ngerman,11pt]{article}
+
+\usepackage{geometry}
+
+% General includes used by all x3-templates
+\input{x3-general-preamble}
+
+% Make it possible to enable or disable TOC
+\newif\ifShowTOC
+
+\linespread{1.1}
+
 
 %
 % Begin: Author and Document Information
@@ -35,6 +46,15 @@
   \begin{center}%
     \includegraphics[#1]{figures/#2}%
   \end{center}%
+}
+
+\newcommand{\figur}[4]{
+    \begin{figure}[htbp]%
+    \centering%
+    \includegraphics[keepaspectratio,#1]{figures/#2}
+    \caption{#3}
+    \label{#4}
+    \end{figure}
 }
 
 \input{x3-assignment-begin}
