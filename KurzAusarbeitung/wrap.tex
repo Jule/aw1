@@ -1,6 +1,6 @@
 \documentclass[a4paper,ngerman,11pt]{article}
 
-\usepackage{geometry}
+\usepackage[a4paper]{geometry}
 
 % General includes used by all x3-templates
 \input{x3-general-preamble}
@@ -20,7 +20,7 @@
 \newcommand{\documentDate}{ \today }
 
 \newcommand{\documentAuthor}{
-    \textbf{Lucas Jenß} \\ Betreuung: Prof. Schwarz
+    \textbf{Lucas Jenß} \\ Betreuung: Prof. Dr. B. Schwarz
 }
 
 \newcommand{\documentShortAuthor}{}
@@ -57,7 +57,10 @@
     \end{figure}
 }
 
+
 \input{x3-assignment-begin}
+
+  \newgeometry{bottom=1.2in}
 
     % Must be generated from Markdown!
     \input{ausarbeitung.tex}
