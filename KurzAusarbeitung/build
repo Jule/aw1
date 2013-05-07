@@ -1,4 +1,4 @@
 #!/bin/bash
 
 mmd2tex ausarbeitung.mmd && \
-    omgtex.rb --bibtex --open wrap.tex
+    omgtex.rb --shell-escape --bibtex --open wrap.tex
