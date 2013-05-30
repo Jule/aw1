@@ -1,6 +1,6 @@
 * (fixed) Slide #7, resolution, pixeltakt
 * Slide #11 - safely = unscharf
-* Slide #16 - sinnvollere anordnung der komponenten
+* (fixed) Slide #16 - sinnvollere anordnung der komponenten
 * (fixed) Slide #31 - Mention sum of products
 * (fixed) Slide #45 - Entweder FACTOR erklärer oder konkrete Werte
 * Slide #60 - Output of pipeline, Visualization of Pipeline
