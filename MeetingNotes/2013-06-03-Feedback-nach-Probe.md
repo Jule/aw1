@@ -4,7 +4,7 @@
     * Mention other patterns that are easily implementable in Google Go
         * Zeigen dass es auch noch was anderes kann
 
-* "Die Kurve kriegen" zurück zur Platform
+* (fixed) "Die Kurve kriegen" zurück zur Platform
     * Google-Go Threadpool abgebildet auf zwei CPUs
     * platform erwähnen, wie stages auf cores abgebildet usw
     * was macht jetzt ein thread, und wie ordnet man es den cpus zu
