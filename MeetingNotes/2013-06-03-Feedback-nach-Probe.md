@@ -1,4 +1,4 @@
-* Around slide 70
+* (fixed) Around slide 70
     * Mention that the pipeline pattern is very easily implementable in Google Go.
         * "Handshake" zwischzen den Patterns
     * Mention other patterns that are easily implementable in Google Go
