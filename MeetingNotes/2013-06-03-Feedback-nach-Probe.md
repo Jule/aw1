@@ -29,4 +29,4 @@
         * Implementation of current Java subsystem in either language
         * Possibly using Pipeline pattern and SIMD
 
-* Quellen aus Kurzausarbeitung
+* (fixed) Quellen aus Kurzausarbeitung
