@@ -17,13 +17,16 @@ Because of the mentioned increase in complexity and performance requirements in 
 
 <!--\fig{concurrency-publications}{A strong increase in publications related to concurrency can be observed over the last years.}-->
 
-This essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism. Said evaluation is done in context of a modern multiprocessor system-on-chip platform, the Xilinx Zynq 7000. The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments. Additionally, the current lack of tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the programming language "Google Go", and of how it might be used on embedded platforms to increase developer efficiency.
+This essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism. Said evaluation is done in context of a modern multiprocessor system-on-chip platform (MPSoC), the Xilinx Zynq 7000. The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments. Additionally, the current lack of tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the programming language "Google Go", and of how it might be used on embedded platforms to increase developer efficiency.
 
-<!--\todo{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
+The evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems, i.e. those having multiple processors or processing cores with a shared memory. Other parallelism concepts for architectures such as Distributed Memory Access or Nonuniform Memory Access will not be discussed.
+
+<!--\todoin{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
 
 # Parallelism vs. Concurrency
 # The Xilinx Zynq Platform
 
+<!--\clearpage-->
 # Techniques
 
 <!--\citet{Flynn1972}-->, in what is often referred to as "Flynn's Taxonomy", states that there are four broad categories of computer architectures:
@@ -45,9 +48,13 @@ In this essay, the focus is on SIMD and MIMD architectures, which offer a potent
 
 ## Multiple Instruction, Multiple Data
 
+The MIMD category in Flynn's taxonmy, as depicted in <!--\autoref{fig:MIMD}-->, features multiple control-units which provide instructions to a number of processors, each with their own data input stream. Additionally, the MIMD processing units may be interconnected. This category is the most general, and applies to all multi-processor system currently available <!--\citep{Mattson2004}-->.
+
 include multiprocessor systems, and as such are almost universally available in todays desktop computers, and increasingly available on embedded platforms. Furthermore, many modern multi-core microprocessors feature SIMD subsystems, such as Intel's SSE extensions, and
 
 <!--\figw{MIMD}{TODO.}-->
+
+
 
 ## Single Instruction, Multiple Data
 
@@ -59,7 +66,7 @@ A Graphics Processing Unit (GPU) can be seen as a heavily parallel SIMD system. 
 
 <!--\todoin{How SIMD works on ARM NEON}-->
 
-<!--\fig{SIMD}{Visualization of a Single instruction, multiple data architecture, containing three processing units.}-->
+<!--\fig{SIMD}{Visualization of a Single instruction, multiple data architecture, containing three processing units. Heavily inspired by \citep{Mattson2004}}-->
 
 
 
