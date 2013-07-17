@@ -1,5 +1,7 @@
 ausarbeitung.tex
 
+
+*.pyg
 # Added by gemignore. Snippet 'LaTeX'
 *.acn
 *.acr
