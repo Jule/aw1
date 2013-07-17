@@ -7,6 +7,8 @@ content.tex
 .LSOverride
 Icon
 
+figures/*-converted-to.pdf
+
 
 # Thumbnails
 ._*
