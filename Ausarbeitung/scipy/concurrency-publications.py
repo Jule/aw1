@@ -78,17 +78,19 @@ def eps_plot(target):
     fig_height = fig_width*golden_mean      # height in inches
     fig_size =  [fig_width,fig_height]
 
+    print fig_size
+
     params = {'backend': 'ps',
-                 'axes.labelsize': 10,
-                 'text.fontsize': 10,
-                 'legend.fontsize': 10,
-                 'xtick.labelsize': 8,
-                 'ytick.labelsize': 8,
+                 'axes.labelsize': 5,
+                 'text.fontsize': 5,
+                 'legend.fontsize': 5,
+                 'xtick.labelsize': 5,
+                 'ytick.labelsize': 5,
                  'text.usetex': False,
                  'figure.figsize': fig_size}
     rcParams.update(params)
     fig = figure()
-    #fig.subplots_adjust(bottom=0.15, left=0.15)
+    fig.subplots_adjust(bottom=0.175, left=0.15)
 
     progress_plot()
     ylabel('Publications with keyword "concurrency"')
