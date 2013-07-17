@@ -64,13 +64,14 @@ def progress_plot():
     xticks(locs, map(lambda x: "%g" % x, locs))
 
 
-    legend(tuple(["ACM Digital Library", "IEEE Explore"]), "upper left")
+    leg = legend(tuple(["ACM Digital Library", "IEEE Explore"]), "upper left", fancybox=True)
+    leg.get_frame().set_alpha(0.5)
 
 
 
 #http://wiki.scipy.org/Cookbook/Matplotlib/LaTeX_Examples
 def eps_plot(target):
-    fig_width_pt = 217.62206*2
+    fig_width_pt = 217.62206
     inches_per_pt = 1.0/72.27
     golden_mean = (sqrt(5)-1.0)/2.0         # Aesthetic ratio
     fig_width = fig_width_pt*inches_per_pt  # width in inches
