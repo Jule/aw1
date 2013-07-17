@@ -4,43 +4,52 @@ latex input:        x3-util
 latex footer:       x3-paper-end
 
 
-
+<!--\clearpage-->
 # Introduction and Motivation
 
 Embedded platforms and applications are being used throughout many industries, including telecommunication, robotics, medical and automotive <!--\citep{Wang2013}-->. <!--\citet{Campeanu2013}--> states that nowadays it is increasingly common to build embedded systems on heterogenous platforms, containing multiple computational units such as multi-core CPUs, GPUs and FPGAs. If all these components are used to the full extent of their capabilities, such a setup enables better performance than could be previously achieved on embedded platforms.
 
 This is an important shift, since applications running on these platforms become more and more complex, and their performance requirements have to be satisfied. In the past, not only on embedded platforms, this was commonly achieved by boosting processor clock rates. But due to both intractable physical limitations as well as practical engineering considerations, increasing processor clock rates is no longer a feasible approach <!--\citep{Cantrill2008}-->.
 
-The peformance gains possible on heterogenous embedded platforms are a result of the hardware-level parallelism that is achievable on these platforms. But unfortunately, exploiting these parallelism features still is a considerable challenge, given the tools and programming concepts widely in use today <!--\citep{Wang2013,Cantrill2008}-->.
+The performance gains possible on heterogenous embedded platforms are a result of the hardware-level parallelism that is achievable on these platforms. But unfortunately, exploiting these parallelism features still is a considerable challenge, given the tools and programming concepts widely in use today <!--\citep{Wang2013,Cantrill2008}-->.
 
 Because of the mentioned increase in complexity and performance requirements in general, and considering that clock rates can't be expected to increase significantly anymore, research in the area of concurrent applications has taken an important place in the computer science research community. This can be seen in <!--\autoref{fig:concurrency-publications}-->, which shows an increasing number of publications related to concurrency over the last years.
 
 <!--\fig{concurrency-publications}{A strong increase in publications related to concurrency can be observed over the last years.}-->
 
-This essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism. Said evaluation is done in context of a modern multiprocessor system-on-chip platform, the Xilinx Zynq 7000. The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments. Additionally, the current lack of tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the programming language "Google Go".
+This essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism. Said evaluation is done in context of a modern multiprocessor system-on-chip platform, the Xilinx Zynq 7000. The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments. Additionally, the current lack of tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the programming language "Google Go", and of how it might be used on embedded platforms to increase developer efficiency.
 
 <!--\todo{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
 
-
-
 # Parallelism vs. Concurrency
-
 # The Xilinx Zynq Platform
 
-<!--\newpage-->
 # Techniques
 
-<!--\citet{Flynn1972}--> states that there are two broad categories of architectures that operate on multiple data simultaneously, namely "Single instruction, multiple data" (SIMD) and "Multiple instruction, multiple data" (MIMD).
+<!--\citet{Flynn1972}-->, in what is often referred to as "Flynn's Taxonomy", states that there are four broad categories of computer architectures:
 
-MIMD architectures include multiprocessor systems, and as such are almost universally available in todays desktop computers, and increasingly available on embedded platforms. Furthermore, many modern multi-core microprocessors feature SIMD subsystems, such as Intel's SSE extensions, and
+<!--
+\begin{tabular}{ll}
+\textbf{SISD} & Single instruction, single data\\
+\textbf{MISD} & Multiple instruction, single data\\
+\textbf{SIMD} & Single instruction, multiple data\\
+\textbf{MIMD} & Multiple instruction, multiple data\\
+\end{tabular}
+-->
+
+SISD is what can be found in most single-core computers, where a single stream of input data is processed by a single stream of instructions. SISD is not further discussed since it has no parallel elements, and MISD is completely ommited because there are no well-known systems that fit into this category <!--\citep{Mattson2004}-->.
+
+In this essay, the focus is on SIMD and MIMD architectures, which offer a potentially high degree of parallel execution.
 
 
 
-## Pipeline Pattern
+## Multiple Instruction, Multiple Data
 
+include multiprocessor systems, and as such are almost universally available in todays desktop computers, and increasingly available on embedded platforms. Furthermore, many modern multi-core microprocessors feature SIMD subsystems, such as Intel's SSE extensions, and
 
+<!--\figw{MIMD}{TODO.}-->
 
-## SIMD
+## Single Instruction, Multiple Data
 
 An SIMD architecture is one that, given a stream of data, operates on multiple items of that stream for every instruction.
 
@@ -49,7 +58,7 @@ An SIMD architecture is one that, given a stream of data, operates on multiple i
 Single instruction, multiple data (SIMD) techniques
 
 
-
+<!--\fig{SIMD}{TODO}-->
 
 # Conclusion
 
@@ -63,7 +72,7 @@ Ausblick (wie geht es weiter?)
 
 
 
-
+<!--\newpage-->
 # Bla bla
 
 * Einleitung
@@ -77,6 +86,7 @@ Ausblick (wie geht es weiter?)
     werden.
     * Die Position der Einzelkapitel im Rahmen der Gesamtdarstellung mit deren
     * Bedeutung für den Themenschwerpunkt ist zu verdeutlichen.
+
     * Jedes Kapitel beginnt mit einer Übersicht zu den zu erwartenden Beiträgen. Fakten, Begründungen, Implikationen und Alternativenvergleiche sind im Vorrang zu Bewertungen und Stellungnahmen zu behandeln.
     * Diskussion der Literatur
     * Die beabsichtigten weiteren Recherchen, theoretischen Analysen, zu erstellende Konzepte und Implementierungen sind zu skizzieren. Eine Einordnung und Gewichtung des im Vortrag behandelten Themas in die voraussichtliche Masterarbeit ist anzustreben.
@@ -84,7 +94,8 @@ Ausblick (wie geht es weiter?)
 
 <!--
 % Bibliography
-{\footnotesize
+\clearpage
+{
     \bibliography{bibliography}
 }
 -->

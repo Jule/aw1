@@ -1,3 +1,6 @@
+scipy/*.pdf
+scipy/*.eps
+
 content.pdf
 content.tex
 
