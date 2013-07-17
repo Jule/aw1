@@ -2,12 +2,19 @@ Base Header Level:  3
 latex input:        document-info
 latex footer:       x3-paper-end
 
+
+
 # Introduction
 
-As modern embedded applications evolve, their performance requirements increase. Due to the limitations of embedded platforms, such as constraints in power consumption and heat dissipation, these increased performance requirements cannot be met by increasing processor clock rates. Consequently, modern embedded processors, such as the Dual Core ARM Cortex-A9 shipped on the Xilinx Zynq platform, do not only feature more than a single processing core, but also provide support for hardware level parallelism.
+<!--\citet{Campeanu2013}--> states that nowadays it is more common to build embedded systems on heterogenous platforms, containing multiple computational units such as multi-core CPUs, GPUs and FPGAs. If all these components are used to the full extent of their capabilities, such a setup enables better performance than could be previously achieved on embedded platforms.
+
+This is an important shift, since applications running on these platforms become more and more complex, and their performance requirements have to be satisfied. In the past, not only on embedded platforms, this was commonly achieved by boosting processor clock rates. But due to both intractable physical limitations as well as practical engineering conditions, increasing processor clock rates is no longer feasible <!--\citep{Cantrill2008}-->.
+
+The peformance gains possible on heterogenous platforms are a result of the hardware-level parallelism that is achievable on these platforms. But unfortunately, exploiting these parallelism features still is a considerable challenge, given the tools and programming concepts widely in use today <!--\citep{Wang2013,Cantrill2008}-->.
 
 In this essay, a number of techniques that allow the exploitation of different parallelism concepts will be explained. Additionally, their importance in the context of embedded application development will be evaluated based on current research.
 
+Embedded platforms and applications are being used throughout many industries, including telecommunication, robotics, medical and automotive <!--\citep{Wang2013}-->. <!--\todo{bla bla importance}-->
 
 
 # Techniques
@@ -30,6 +37,38 @@ An SIMD architecture is one that, given a stream of data, operates on multiple i
 
 Single instruction, multiple data (SIMD) techniques
 
+
+
+
+# Conclusion
+
+Komprimierte Darstellung der wesentlichen Inhalte
+
+
+
+## Outlook
+
+Ausblick (wie geht es weiter?)
+
+
+
+
+# Bla bla
+
+* Einleitung
+    * Thema und dessen Anwendungsfeld bzw. dessen perspektivische Nutzung zur Unterstützung der Motivation.
+    * Ziele der Dokumentation und Abgrenzung.
+    * Schwerpunkte der Dokumentation.
+    * Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.
+* Hauptteil
+    * Praktischen oder ggf. wissenschaftlichen Relevanz des Themas
+    * Die Begründung für die Struktur und Inhalte der folgenden Kapitel soll vermittelt
+    werden.
+    * Die Position der Einzelkapitel im Rahmen der Gesamtdarstellung mit deren
+    * Bedeutung für den Themenschwerpunkt ist zu verdeutlichen.
+    * Jedes Kapitel beginnt mit einer Übersicht zu den zu erwartenden Beiträgen. Fakten, Begründungen, Implikationen und Alternativenvergleiche sind im Vorrang zu Bewertungen und Stellungnahmen zu behandeln.
+    * Diskussion der Literatur
+    * Die beabsichtigten weiteren Recherchen, theoretischen Analysen, zu erstellende Konzepte und Implementierungen sind zu skizzieren. Eine Einordnung und Gewichtung des im Vortrag behandelten Themas in die voraussichtliche Masterarbeit ist anzustreben.
 
 
 <!--
