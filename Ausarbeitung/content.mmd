@@ -51,29 +51,35 @@ include multiprocessor systems, and as such are almost universally available in 
 
 ## Single Instruction, Multiple Data
 
-An SIMD architecture is one that, given a stream of data, operates on multiple items of that stream for every instruction.
+Given a single stream of instructions and multiple streams of data, an SIMD architecture is one that applies each instruction to all of the data streams **in parallel**. This process is visualized in <!--\autoref{fig:SIMD}-->, where there is a single control unit providing the processors with instructions. For every instruction, every processor takes an item out of its own input stream and applies the instruction.
 
-* Mention GPU stuff (OpenCL) somewhere
+As such, SIMD architectures are a good fit for specialized applications that consist of high data parallelism as well as little interprocess communication. As an example, in digital signal processing, e.g. decoding a video stream, the situation is common that the same operations need to be applied continously to a large stream of data (in case of a 1080p high-quality H.264 movie, the bitrate is usually above 17Mbit/s).
 
-Single instruction, multiple data (SIMD) techniques
+A Graphics Processing Unit (GPU) can be seen as a heavily parallel SIMD system. GPUs usually consist of an array of multiprocessors, each in turn consisting of multiple processing units (ALUs), which all share a single control unit (exactly as depicted in <!--\autoref{fig:SIMD}-->). Each of these ALUs is then able to execute instructions provided by the control unit, potentially providing a many-fold performance increase.
+
+<!--\todoin{How SIMD works on ARM NEON}-->
+
+<!--\fig{SIMD}{Visualization of a Single instruction, multiple data architecture, containing three processing units.}-->
 
 
-<!--\fig{SIMD}{TODO}-->
+
+
 
 # Conclusion
 
-Komprimierte Darstellung der wesentlichen Inhalte
+<!--\todo{Komprimierte Darstellung der wesentlichen Inhalte}-->
 
 
 
 ## Outlook
 
-Ausblick (wie geht es weiter?)
+<!--\todo{Ausblick (wie geht es weiter?)}-->
 
 
 
-<!--\newpage-->
-# Bla bla
+
+<!--\clearpage-->
+# Gliederungshinweise
 
 * Einleitung
     * Thema und dessen Anwendungsfeld bzw. dessen perspektivische Nutzung zur Unterstützung der Motivation.
@@ -90,6 +96,8 @@ Ausblick (wie geht es weiter?)
     * Jedes Kapitel beginnt mit einer Übersicht zu den zu erwartenden Beiträgen. Fakten, Begründungen, Implikationen und Alternativenvergleiche sind im Vorrang zu Bewertungen und Stellungnahmen zu behandeln.
     * Diskussion der Literatur
     * Die beabsichtigten weiteren Recherchen, theoretischen Analysen, zu erstellende Konzepte und Implementierungen sind zu skizzieren. Eine Einordnung und Gewichtung des im Vortrag behandelten Themas in die voraussichtliche Masterarbeit ist anzustreben.
+
+
 
 
 <!--
