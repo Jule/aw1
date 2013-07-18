@@ -42,13 +42,19 @@ The Xilinx Zynq 7000 architecture is composed of a dual-core ARM Cortex-A9 CPU a
 
 This laserscanner-based obstacle detection system was realized by <!--\citet{Jestel2013}-->, providing an implementation in the Java programming language running on the Android 4 operating system. Because of the fact that the Zynq 7000 platform was not yet available when development on the system started, it is currently running on the "Open Multimedia Application Platform 4430" (OMAP4), which features similar specifications to the Zynq platform, but lacks the integration of an FPGA.
 
+<!--\todoin{Expand a bit on laserscanner and perhaps current implementation}-->
+
 
 
 ## Lane guiding control system [lane-guiding-control]
 
+<!--\todoin{Base this on Andresen's MA thesis}-->
+
+
+
 
 <!--\clearpage-->
-# Technique Categorizations
+# Parallel computing architectures
 
 <!--\citet{Flynn1972}-->, in what is often referred to as "Flynn's Taxonomy", states that there are four broad categories of computer architectures:
 
@@ -71,7 +77,7 @@ In this essay, the focus is on SIMD and MIMD architectures, which offer a potent
 
 The MIMD category in Flynn's taxonmy, as depicted in <!--\autoref{fig:MIMD}-->, features multiple control-units which provide instructions to a number of processors, each with their own data input stream. Additionally, the MIMD processing units may be interconnected. This category is the most general, and applies to all multi-processor system currently available <!--\citep{Mattson2004}-->.
 
-<!--\figw{MIMD}{TODO.}-->
+<!--\figw{MIMD}{Visualization of a Multiple instruction, multiple data architecture. There are three different processing units, each featuring its own control unit and processor. All processing units have disjoint instruction and input data streams. The processors may be interconnected among each other.}-->
 
 
 
@@ -83,26 +89,41 @@ As such, SIMD architectures are a good fit for specialized applications that con
 
 A Graphics Processing Unit (GPU) can be seen as a heavily parallel SIMD system. GPUs usually consist of an array of multiprocessors, each in turn consisting of multiple processing units (ALUs), which all share a single control unit (exactly as depicted in <!--\autoref{fig:SIMD}-->). Each of these ALUs is then able to execute instructions provided by the control unit, potentially providing a many-fold performance increase.
 
-<!--\todoin{How SIMD works on ARM NEON}-->
-
 <!--\fig{SIMD}{Visualization of a Single instruction, multiple data architecture, containing three processing units. Heavily inspired by \citet{Mattson2004}}-->
 
 
 
+<!--\newpage-->
+# Parallelization Techniques
 
-# Techniques
-
+In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If available, current research based on these techniques will be highlighted.
 
 ## ARM NEON SIMD [arm-neon]
+
+<!--\todoin{Overview of how the NEON engine applies SIMD techniques}-->
 
 
 
 ## Pipeline Pattern
 
+<!--\todoin{Describe Pipeline Pattern as well as applications, pros and cons}-->
 
 
 
+<!--\clearpage-->
 # The "Go" programming language
+
+Go is a general-purpose programming language first released in 2009, and currently being developed as an open-source project <!--\citep{Golang2013}-->. Its main goal was to increase developer productivity, especially when working in environments featuring multicore processors, networked systems and massive computation clusters. It also aspires to be easy to learn. An additional focus when developing the language was the reduction of compile time, since some modern languages, like C++, suffer from very high compilation times for larger projects <!--\citep{DAngelo2012}-->, which in turn reduces developer efficiency.
+
+<!--\citet{Pike2012}--> states that most of the languages widely in use today were created in environments that are, in large parts, unrelated to the current computing landscape. He is referring to the paradigm shift from sequential to concurrent applications, where it becomes necessary to reason about and implement concurrent software in order to exploit the available resources. Languages such as C/C++, Java and Python were built when the importance of multi-processor programming had not yet developed, and as such, all of the parallelism concepts that can be found in them are the result of the adjustment of the language to current requirements. As an example, the building blocks for concurrent applications that can be found in the `java.util.concurrent` package were introduced in Java version 1.5, eight years after the initial language release <!--\citep{Peierls2005}-->. As a result, writing concurrent applications in these languages can often feel like a workaround <!--\citep{Pike2012}-->.
+
+Go was developed with concurrency as one of the main language features. The compiler inserts a small runtime environment into every compiled binary, which measures around 400KB in size on a x64 platform in Go v1.1.1. This runtime, apart from providing convenient features such as garbage collection, is able to distribute the so-called "goroutines" onto a pool of operating system threads. As a result, goroutines are much more "lightweight" than OS threads, since no interaction with the operating system is necessary to create and schedule them (other than the management of the thread pool). Creating a goroutine does not require additional work for the developer compared to calling a function, as can be seen in <!--\autoref{code:goroutine}-->.
+
+<!--
+\includego{goroutine.go}{goroutine}{Example of the sequential invocation of a function compared to the concurrent execution using a goroutine.}
+-->
+
+
 
 ## Comparison to C
 
@@ -111,8 +132,7 @@ A Graphics Processing Unit (GPU) can be seen as a heavily parallel SIMD system. 
 
 
 
-
-
+<!--\clearpage-->
 # Conclusion
 
 <!--\todoin{Komprimierte Darstellung der wesentlichen Inhalte}-->

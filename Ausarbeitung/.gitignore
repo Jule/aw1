@@ -1,6 +1,8 @@
 scipy/*.pdf
 scipy/*.eps
 
+*.pyg
+
 content.pdf
 content.tex
 
