@@ -24,8 +24,28 @@ The evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems
 
 <!--\todoin{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
 
-# Parallelism vs. Concurrency
-# The Xilinx Zynq Platform
+
+
+
+# Platform and problem description
+
+In the <!--\citet{FAUST2013}-->, the Zynq 7000 SoC manufactured by Xilinx is currently being used for embedded application development. At present, there are two major subsystems that need to run in parallel on this platform, which are part of a technology field trial of advanced driver assistance systems:
+
+1. An obstacle detection system (<!--\autoref{obstacle-detection}-->)
+1. A lane guiding control system (<!--\autoref{lane-guiding-control}-->)
+
+The Xilinx Zynq 7000 architecture is composed of a dual-core ARM Cortex-A9 CPU as well as an on-chip programmable logic unit (FPGA). The ARM Cortex-A9 additionally contains the ARM NEON general-purpose SIMD engine, for which an overview will be given in <!--\autoref{arm-neon}--> <!--\citep{Xilinx2013}-->.
+
+
+
+## Obstacle detection system [obstacle-detection]
+
+This laserscanner-based obstacle detection system was realized by <!--\citet{Jestel2013}-->, providing an implementation in the Java programming language running on the Android 4 operating system. Because of the fact that the Zynq 7000 platform was not yet available when development on the system started, it is currently running on the "Open Multimedia Application Platform 4430" (OMAP4), which features similar specifications to the Zynq platform, but lacks the integration of an FPGA.
+
+
+
+## Lane guiding control system [lane-guiding-control]
+
 
 <!--\clearpage-->
 # Technique Categorizations
@@ -65,7 +85,29 @@ A Graphics Processing Unit (GPU) can be seen as a heavily parallel SIMD system. 
 
 <!--\todoin{How SIMD works on ARM NEON}-->
 
-<!--\fig{SIMD}{Visualization of a Single instruction, multiple data architecture, containing three processing units. Heavily inspired by \citep{Mattson2004}}-->
+<!--\fig{SIMD}{Visualization of a Single instruction, multiple data architecture, containing three processing units. Heavily inspired by \citet{Mattson2004}}-->
+
+
+
+
+# Techniques
+
+
+## ARM NEON SIMD [arm-neon]
+
+
+
+## Pipeline Pattern
+
+
+
+
+# The "Go" programming language
+
+## Comparison to C
+
+## Pipeline Pattern in Go
+
 
 
 
@@ -73,19 +115,20 @@ A Graphics Processing Unit (GPU) can be seen as a heavily parallel SIMD system. 
 
 # Conclusion
 
-<!--\todo{Komprimierte Darstellung der wesentlichen Inhalte}-->
+<!--\todoin{Komprimierte Darstellung der wesentlichen Inhalte}-->
 
 
 
 ## Outlook
 
-<!--\todo{Ausblick (wie geht es weiter?)}-->
+<!--\todoin{Ausblick (wie geht es weiter?)}-->
 
 
 
 
-<!--\clearpage-->
-# Gliederungshinweise
+<!--\clearpage
+    \section*{Gliederungshinweise}
+-->
 
 * Einleitung
     * Thema und dessen Anwendungsfeld bzw. dessen perspektivische Nutzung zur Unterstützung der Motivation.
