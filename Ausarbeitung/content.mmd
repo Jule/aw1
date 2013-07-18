@@ -3,7 +3,6 @@ latex input:        document-info
 latex input:        x3-util
 latex footer:       x3-paper-end
 
-
 <!--\clearpage-->
 # Introduction and Motivation
 
@@ -106,12 +105,18 @@ In this section, selected techniques will be explained in context of the concret
 
 ## Pipeline Pattern
 
+
+
 <!--\todoin{Describe Pipeline Pattern as well as applications, pros and cons}-->
+
+<!--\todoin{Try to make a nice transition from pipeline pattern to Go, so that the reader can follow along}-->
 
 
 
 <!--\clearpage-->
 # The "Go" programming language
+
+This section will give a short overview of the programming language "Go", as well as provide a comparison to C, since it is the most common programming language used on embedded platforms<!--\todo{citation needed}-->. To wrap up this section, an example implementation of the pipeline pattern will be presented and explained.
 
 Go is a general-purpose programming language first released in 2009, and currently being developed as an open-source project <!--\citep{Golang2013}-->. Its main goal was to increase developer productivity, especially when working in environments featuring multicore processors, networked systems and massive computation clusters. It also aspires to be easy to learn. An additional focus when developing the language was the reduction of compile time, since some modern languages, like C++, suffer from very high compilation times for larger projects <!--\citep{DAngelo2012}-->, which in turn reduces developer efficiency.
 
@@ -123,11 +128,22 @@ Go was developed with concurrency as one of the main language features. The comp
 \includego{goroutine.go}{goroutine}{Example of the sequential invocation of a function compared to the concurrent execution using a goroutine.}
 -->
 
+The communication between goroutines is realized through channels (the language keyword being `chan`), which have a capacity defining how many messages each channel can hold. Go's communication model can thus be regarded as a "message-passing" model. If any goroutine tries to insert or retrieve data from a channel, and if this channel is full or empty respectively, then the invoking goroutine will block until data becomes available. As a result, channels are also the synchronization primitive in Go.
+
+<!--
+\includego{channels.go}{gochannels}{Syntactical overview of channel usage in Go.}
+-->
+
 
 
 ## Comparison to C
 
-## Pipeline Pattern in Go
+<!--\todoin{Syntactical/Semantical differences as well as performance comparisons, if possible. Context switch time, garbage collection impact, plain performance (e.g. loops) compared to C, all that stuff.}-->
+
+
+
+## Example: Pipeline Pattern in Go
+
 
 
 
