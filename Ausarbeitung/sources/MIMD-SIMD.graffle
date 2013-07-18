@@ -14,7 +14,7 @@
 	<key>BackgroundGraphic</key>
 	<dict>
 		<key>Bounds</key>
-		<string>{{0, 0}, {1204, 635}}</string>
+		<string>{{0, 0}, {1204, 620}}</string>
 		<key>Class</key>
 		<string>SolidGraphic</string>
 		<key>ID</key>
@@ -38,7 +38,7 @@
 	<key>CanvasOrigin</key>
 	<string>{0, 0}</string>
 	<key>CanvasSize</key>
-	<string>{1204, 635}</string>
+	<string>{1204, 620}</string>
 	<key>ColumnAlign</key>
 	<integer>1</integer>
 	<key>ColumnSpacing</key>
@@ -1144,7 +1144,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{354, 237.84708603090712}, {75, 24}}</string>
+			<string>{{354, 235.91017548084437}, {75, 24}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1172,7 +1172,7 @@
 				<key>Offset</key>
 				<real>-37</real>
 				<key>Position</key>
-				<real>0.6800035834312439</real>
+				<real>0.55374091863632202</real>
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
@@ -1222,7 +1222,7 @@
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{428.5, 207.02143859863281}</string>
+				<string>{428.5, 220.5}</string>
 				<string>{428.5, 270}</string>
 			</array>
 			<key>Style</key>
@@ -1238,6 +1238,11 @@
 					<key>TailArrow</key>
 					<string>0</string>
 				</dict>
+			</dict>
+			<key>Tail</key>
+			<dict>
+				<key>ID</key>
+				<integer>37</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -2612,7 +2617,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-07-17 15:16:48 +0000</string>
+	<string>2013-07-18 08:15:32 +0000</string>
 	<key>Modifier</key>
 	<string>Lucas Jenß</string>
 	<key>NotesVisible</key>
@@ -2693,7 +2698,7 @@
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{-0, 4}, {1280, 774}}</string>
+		<string>{{347, 247}, {1280, 774}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -2707,15 +2712,15 @@
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{615.92040093227592, 0}, {569.65174399632951, 315.92039950888147}}</string>
+		<string>{{46.093751030275619, 0}, {883.5937697498598, 484.37501082662516}}</string>
 		<key>Zoom</key>
-		<real>2.0099999904632568</real>
+		<real>1.2799999713897705</real>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Canvas 1</string>
-				<real>2.0099999904632568</real>
-				<real>1.809999942779541</real>
+				<real>1.2799999713897705</real>
+				<real>1.3400000333786011</real>
 			</array>
 		</array>
 	</dict>
