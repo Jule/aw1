@@ -101,7 +101,15 @@ In this section, selected techniques will be explained in context of the concret
 
 ## ARM NEON SIMD [arm-neon]
 
+The ARM NEON extension is a general-purpose 128-bit SIMD architecture available in ARMv7. It is included in the ARM Cortex-A9 processors that can be found on the Zynq 7000 <!--\citep{Jang2011}-->.
+
+The NEON extension is composed of 32 64-bit registers, which can alternatively be used as 16 128-bit registers. In NEON terminology, a register is a vector of elements of the same data-type (possible data-types 8-bit to 64-bit signed and unsigned integers as well as single precision floats). Every instruction given to the NEON engine is then performed on all elements of one or more such vectors. A "lane" is the part of all registers which shares the same operation. This process is visualized in <!--\autoref{fig:NEON-SIMD}-->.
+
+<!--\fig{NEON-SIMD}{Visualization of the NEON SIMD data flow. Assuming 64-bit source registers, each of the operands is 16-bit wide. The blue squares represent the operations applied to the registers. Four operations are applied, and thus there are four lanes.}-->
+
 <!--\todoin{Overview of how the NEON engine applies SIMD techniques}-->
+
+<!--\todoin{Point to results at \citep{AlchemyLab2013} after verifying them, since they show the possible performance increase with SIMD very well.}-->
 
 
 
@@ -164,25 +172,6 @@ The communication between goroutines is realized through channels (the language 
 
 
 
-<!--\clearpage
-    \section*{Gliederungshinweise}
--->
-
-* Einleitung
-    * Thema und dessen Anwendungsfeld bzw. dessen perspektivische Nutzung zur Unterstützung der Motivation.
-    * Ziele der Dokumentation und Abgrenzung.
-    * Schwerpunkte der Dokumentation.
-    * Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.
-* Hauptteil
-    * Praktischen oder ggf. wissenschaftlichen Relevanz des Themas
-    * Die Begründung für die Struktur und Inhalte der folgenden Kapitel soll vermittelt
-    werden.
-    * Die Position der Einzelkapitel im Rahmen der Gesamtdarstellung mit deren
-    * Bedeutung für den Themenschwerpunkt ist zu verdeutlichen.
-
-    * Jedes Kapitel beginnt mit einer Übersicht zu den zu erwartenden Beiträgen. Fakten, Begründungen, Implikationen und Alternativenvergleiche sind im Vorrang zu Bewertungen und Stellungnahmen zu behandeln.
-    * Diskussion der Literatur
-    * Die beabsichtigten weiteren Recherchen, theoretischen Analysen, zu erstellende Konzepte und Implementierungen sind zu skizzieren. Eine Einordnung und Gewichtung des im Vortrag behandelten Themas in die voraussichtliche Masterarbeit ist anzustreben.
 
 
 

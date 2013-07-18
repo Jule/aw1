@@ -19,3 +19,22 @@ include multiprocessor systems, and as such are almost universally available in 
 * E.g. on a relatively high level, one can use threads
 * But there are also things like GPUs, SIMD etc
 
+
+# Gliederungshinweise
+
+
+* Einleitung
+    * Thema und dessen Anwendungsfeld bzw. dessen perspektivische Nutzung zur Unterstützung der Motivation.
+    * Ziele der Dokumentation und Abgrenzung.
+    * Schwerpunkte der Dokumentation.
+    * Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.
+* Hauptteil
+    * Praktischen oder ggf. wissenschaftlichen Relevanz des Themas
+    * Die Begründung für die Struktur und Inhalte der folgenden Kapitel soll vermittelt
+    werden.
+    * Die Position der Einzelkapitel im Rahmen der Gesamtdarstellung mit deren
+    * Bedeutung für den Themenschwerpunkt ist zu verdeutlichen.
+
+    * Jedes Kapitel beginnt mit einer Übersicht zu den zu erwartenden Beiträgen. Fakten, Begründungen, Implikationen und Alternativenvergleiche sind im Vorrang zu Bewertungen und Stellungnahmen zu behandeln.
+    * Diskussion der Literatur
+    * Die beabsichtigten weiteren Recherchen, theoretischen Analysen, zu erstellende Konzepte und Implementierungen sind zu skizzieren. Eine Einordnung und Gewichtung des im Vortrag behandelten Themas in die voraussichtliche Masterarbeit ist anzustreben.
