@@ -41,7 +41,11 @@ The Xilinx Zynq 7000 architecture is composed of a dual-core ARM Cortex-A9 CPU a
 
 This laserscanner-based obstacle detection system was realized by <!--\citet{Jestel2013}-->, providing an implementation in the Java programming language running on the Android 4 operating system. Because of the fact that the Zynq 7000 platform was not yet available when development on the system started, it is currently running on the "Open Multimedia Application Platform 4430" (OMAP4), which features similar specifications to the Zynq platform, but lacks the integration of an FPGA.
 
+
+
 <!--\todoin{Expand a bit on laserscanner and perhaps current implementation}-->
+
+<!--\todoin{thread cooperation sollte hervorgehoben werden}-->
 
 
 
@@ -50,6 +54,11 @@ This laserscanner-based obstacle detection system was realized by <!--\citet{Jes
 <!--\citep{Andresen2013}-->
 
 <!--\todoin{Base this on Andresen's MA thesis}-->
+
+* hardware software paritionierung
+    * pixelstrom auf fpga
+    * rest auf linux, ohne echtzeitpatch
+    * bildrate mit 60fps eher harmlos, entsprechend bei mehr datenrate eventuell linux keine lösung
 
 
 
@@ -172,7 +181,7 @@ The communication between goroutines is realized through channels (the language 
 
 <!--\todoin{Ausblick (wie geht es weiter?)}-->
 
-
+<!--\todoin{Hier im Ausblick erwähnen, dass Performance-Vergleiche anhand eigener Anwendungen folgen, bezogen auf SIMD stuff aber auch Go auf embedded (vs. C/C++)}-->
 
 
 
