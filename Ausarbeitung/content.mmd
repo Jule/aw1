@@ -27,10 +27,10 @@ The evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems
 
 
 
-<!--\clearpage-->
+
 # Platform and problem description
 
-In the <!--\citet{FAUST2013}-->, the Zynq 7000 SoC manufactured by Xilinx is currently being used for embedded application development. At present, there are two major subsystems that need to run in parallel on this platform, which are part of a technology field trial of advanced driver assistance systems:
+This section covers a short overview of the platform currently being used for embedded application development in the <!--\citet{FAUST2013}-->, the Xilinx Zynq 7000, as well as the applications running on that platform. This overview is given to establish a context for the subsequent sections, and to give an idea of recent work. At present, there are two major subsystems that need to run in parallel on this platform, which are part of a technology field trial of advanced driver assistance systems:
 
 1. An obstacle detection system (<!--\autoref{obstacle-detection}-->)
 1. A lane guiding control system (<!--\autoref{lane-guiding-control}-->)
@@ -60,7 +60,6 @@ The developed system runs on a Linux Kernel v3.2, and it should be noted that th
 
 
 
-<!--\clearpage-->
 # Parallel computing architectures
 
 <!--\citet{Flynn1972}-->, in what is often referred to as "Flynn's Taxonomy", states that there are four broad categories of computer architectures:
@@ -141,12 +140,6 @@ Even though the NEON engine is realized as part of the ARM core, it has a comple
 
 <!--\clearpage-->
 # The "Go" programming language
-
-<!--\todoin{Im Preface:
-..., but over 80% of all enbedded sysytems are developed
- in this classical language.
-Design Patterns for Embedded Systems in C: An Embedded Software Engineering Toolkit \url{http://goo.gl/2S1dX}
-}-->
 
 <!--\todoin{Software Engineering for Embedded Systems: Methods, Practical Techniques, and Applications (Expert Guide) \url{http://goo.gl/vM360}
 }-->
