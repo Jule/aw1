@@ -30,12 +30,12 @@ The evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems
 
 # Platform and problem description
 
-This section covers a short overview of the platform currently being used for embedded application development in the <!--\citet{FAUST2013}-->, the Xilinx Zynq 7000, as well as the applications running on that platform. This overview is given to establish a context for the subsequent sections, and to give an idea of recent work. At present, there are two major subsystems that need to run in parallel on this platform, which are part of a technology field trial of advanced driver assistance systems:
+This section covers a short overview of the platform currently being used for embedded application development in the <!--\citet{FAUST2013}-->, the Xilinx Zynq 7000, along with the applications running on that platform. This overview is given to establish a context for the subsequent sections, and to give an idea of recent work. At present, there are two major subsystems that need to run in parallel on this platform, which are part of a technology field trial of advanced driver assistance systems:
 
 1. An obstacle detection system (<!--\autoref{obstacle-detection}-->)
 1. A lane guiding control system (<!--\autoref{lane-guiding-control}-->)
 
-The Xilinx Zynq 7000 architecture is composed of a dual-core ARM Cortex-A9 CPU as well as an on-chip programmable logic unit (FPGA). The ARM Cortex-A9 additionally contains the ARM NEON general-purpose SIMD engine <!--\citep{Xilinx2013}-->, for which an overview will be given in <!--\autoref{arm-neon}-->.
+The Xilinx Zynq 7000 architecture is composed of a dual-core ARM Cortex-A9 CPU and an on-chip programmable logic unit (FPGA). The ARM Cortex-A9 additionally contains the ARM NEON general-purpose SIMD engine <!--\citep{Xilinx2013}-->, for which an overview will be given in <!--\autoref{arm-neon}-->.
 
 
 
@@ -53,7 +53,7 @@ In his implementation, <!--\citet{Jestel2013}--> employs two worker threads assi
 
 The previously developed System-on-Chip Autonomous Vehicle architecture devised by <!--\citet{Johannsen2013}--> was ported to the Zynq 7000 platform by <!--\citet{Andresen2013}-->. When porting the architecture he focused on distribution of computational tasks between the available CPU cores and the programmable logic (FPGA), thus making optimal use of the available resources in order to accommodate additional subsystems in the future (such as the obstacle detection system).
 
-The resulting system uses the FPGA for processing of the raw image data received from a 60 FPS camera with a resolution of 640x480px. The output data from the FPGA is then evaluated by one of the available CPU cores, which then calculates the steering parameters to keep the vehicle driving in its lane. The other core manages the computations executed on the FPGA as well as any operating system tasks that may arise.
+The resulting system uses the FPGA for processing of the raw image data received from a 60 FPS camera with a resolution of 640x480px. The output data from the FPGA is then evaluated by one of the available CPU cores, which then calculates the steering parameters to keep the vehicle driving in its lane. The other core manages the computations executed on the FPGA plus any operating system tasks that may arise.
 
 The developed system runs on a Linux Kernel v3.2, and it should be noted that the system's timing constraints for the lane guidance were kept despite the fact that no real-time patch (e.g. `CONFIG PREEMPT RT`) had been applied to the kernel (the scheduler was set to `SCHED FIFO`). It is reasonable to assume that this was possible due to the relatively low framerate and resolution of the camera, which resulted in an low overall system load. With increasing load, however, it might not be possible to keep timing constraints without either applying a real-time patch to the kernel or using a real-time operating system (RTOS).
 
@@ -91,7 +91,7 @@ The MIMD category in Flynn's taxonmy, as depicted in <!--\autoref{fig:MIMD}-->, 
 
 Given a single stream of instructions and multiple streams of data, an SIMD architecture is one that applies each instruction to all of the data streams **in parallel**. This process is visualized in <!--\autoref{fig:SIMD}-->, where there is a single control unit providing the processors with instructions. For every instruction, every processor takes an item out of its own input stream and applies the instruction.
 
-As such, SIMD architectures are a good fit for specialized applications that consist of high data parallelism as well as little interprocess communication. As an example, in digital signal processing, e.g. decoding a video stream, the situation is common that the same operations need to be applied continously to a large stream of data (in case of a 1080p high-quality H.264 movie, the bitrate is usually above 17Mbit/s). As such, SIMD instruction sets have become a generic feature of most high-end processors because of the possible performance improvements that they can provide <!--\citep{Jang2011}-->.
+As such, SIMD architectures are a good fit for specialized applications that consist of high data parallelism along with little interprocess communication. As an example, in digital signal processing, e.g. decoding a video stream, the situation is common that the same operations need to be applied continously to a large stream of data (in case of a 1080p high-quality H.264 movie, the bitrate is usually above 17Mbit/s). As such, SIMD instruction sets have become a generic feature of most high-end processors because of the possible performance improvements that they can provide <!--\citep{Jang2011}-->.
 
 A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD system. GPUs usually consist of an array of multiprocessors, each in turn consisting of multiple processing units (ALUs), which all share a single control unit (exactly as depicted in <!--\autoref{fig:SIMD}-->). Each of these ALUs is then able to execute instructions provided by the control unit, potentially providing a many-fold performance increase.
 
@@ -111,13 +111,13 @@ In this section, selected techniques will be explained in context of the concret
 
 The ARM NEON extension is a general-purpose 128-bit SIMD architecture available in ARMv7. It is included in the ARM Cortex-A9 processors that can be found on the Zynq 7000 <!--\citep{Jang2011}-->.
 
-The NEON extension is composed of 32 64-bit registers, which can alternatively be used as 16 128-bit registers. In NEON terminology, a register is a vector of elements of the same data-type (possible data-types 8-bit to 64-bit signed and unsigned integers as well as single precision floats). Every instruction given to the NEON engine is then performed on all elements of one or more such vectors. A "lane" is the part of all registers which shares the same operation. This process is visualized in <!--\autoref{fig:NEON-SIMD}-->.
+The NEON extension is composed of 32 64-bit registers, which can alternatively be used as 16 128-bit registers. In NEON terminology, a register is a vector of elements of the same data-type (possible data-types are 8-bit to 64-bit signed and unsigned integers as well as single precision floats). Every instruction given to the NEON engine is then performed on all elements of one or more such vectors. A "lane" is the part of all registers which shares the same operation. This process is visualized in <!--\autoref{fig:NEON-SIMD}-->.
 
 <!--\fig{NEON-SIMD}{Visualization of the NEON SIMD data flow. Assuming 64-bit source registers, each of the operands is 16-bit wide. The blue squares represent the operations applied to the registers. Four operations are applied, and thus there are four lanes.}-->
 
 <!--\todoin{Add a few standard operations, and maybe a short example}-->
 
-Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline as well as a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. Since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, pre-loading can
+Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. Since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, pre-loading can
 
 
 
