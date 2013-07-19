@@ -148,9 +148,9 @@ This section will give a short overview of the programming language "Go", as wel
 
 Go is a general-purpose programming language first released in 2009, and currently being developed as an open-source project <!--\citep{Golang2013}-->. Its main goal was to increase developer productivity, especially when working in environments featuring multicore processors, networked systems and massive computation clusters. It also aspires to be easy to learn. An additional focus when developing the language was the reduction of compile time, since some modern languages, like C++, suffer from very high compilation times for larger projects <!--\citep{DAngelo2012}-->, which in turn reduces developer efficiency.
 
-<!--\citet{Pike2012}--> states that most of the languages widely in use today were created in environments that are, in large parts, unrelated to the current computing landscape. He is referring to the paradigm shift from sequential to concurrent applications, where it becomes necessary to reason about and implement concurrent software in order to exploit the available resources. Languages such as C/C++, Java and Python were built when the importance of multi-processor programming had not yet developed, and as such, all of the parallelism concepts that can be found in them are the result of the adjustment of the language to current requirements. As an example, the building blocks for concurrent applications that can be found in the `java.util.concurrent` package were introduced in Java version 1.5, eight years after the initial language release <!--\citep{Peierls2005}-->. As a result, writing concurrent applications in these languages can often feel like a workaround <!--\citep{Pike2012}-->.
+<!--\citet{Pike2012}--> states that most of the languages widely in use today were created in environments that are, in large parts, unrelated to the current computing landscape. He is referring to the paradigm shift from sequential to concurrent applications, where it becomes necessary to reason about and implement concurrent software in order to exploit the available resources. Languages such as C/C++, Java and Python were built when the importance of multi-processor programming had not yet developed, and as such, all of the parallelism concepts that can be found in them are the result of the adjustment of the language to requirements that developed after the language was first released. As an example, the building blocks for concurrent applications that can be found in the `java.util.concurrent` package were introduced in Java version 1.5, eight years after the initial language release <!--\citep{Peierls2005}-->. As a result, writing concurrent applications in these languages can often feel like a workaround <!--\citep{Pike2012}-->.
 
-Go was developed with concurrency as one of the main language features. The compiler inserts a small runtime environment into every compiled binary, which measures around 400KB in size on a x64 platform in Go v1.1.1. This runtime, apart from providing convenient features such as garbage collection, is able to distribute the so-called "goroutines" onto a pool of operating system threads. As a result, goroutines are much more "lightweight" than OS threads, since no interaction with the operating system is necessary to create and schedule them (other than the management of the thread pool). Creating a goroutine does not require additional work for the developer compared to calling a function, as can be seen in <!--\autoref{code:goroutine}-->.
+Go in turn was developed with concurrency as one of the main language features. The compiler inserts a small runtime environment into every compiled binary, which, apart from providing convenient features such as garbage collection, is able to distribute the so-called "goroutines" onto a pool of operating system threads. As a result, goroutines are much more "lightweight" than OS threads, since no interaction with the operating system is necessary to create and schedule them (other than the management of the thread pool). Creating a goroutine does not require additional work for the developer compared to calling a function, as can be seen in <!--\autoref{code:goroutine}-->.
 
 <!--
 \includego{goroutine.go}{goroutine}{Example of the sequential invocation of a function compared to the concurrent execution using a goroutine.}
@@ -162,9 +162,19 @@ The communication between goroutines is realized through channels (the language 
 \includego{channels.go}{gochannels}{Syntactical overview of channel usage in Go.}
 -->
 
+<!--\todoin{mention defer}-->
+
+The language includes additional features, which do not deal with concurrency, but have been added for developer convenience. Some of these features include multiple return parameters, slices (which provide a more powerful interface to C-style arrays), garbage collection (which will be discussed in the comparison to C) and built-in dependency management.
+
 
 
 ## Comparison to C
+
+This section highlights the most important differences between Go and C. At this time it is unfortunately not yet possible to present proper results of a performance comparison between the two languages. This is due to the fact that benchmarking in general is a "notoriously delicate" task. It becomes even more complicated when one is trying to perform so-called micro-benchmarks, where the performance of two short piece of code (as opposed to two applications) written in different languages is to be compared <!--\citep{Gil2011}-->. One of the reasons for this complexity is that it is inherently complicated to write two pieces of code in two different languages, such that both code pieces do exactly the same thing in the most performant way possible. Writing such code requires advanced knowledge of the language, as for example choosing the wrong datastructure in one of the code pieces may result in completely misleading benchmark results, from which false conclusions will be drawn.
+
+
+
+<!--\todoin{point out that extensive practical research will have to be carried out in order to determine whether or not the language can be productively used on embedded platforms.}-->
 
 <!--\todoin{Syntactical/Semantical differences as well as performance comparisons, if possible. Context switch time, garbage collection impact, plain performance (e.g. loops) compared to C, all that stuff.}-->
 
