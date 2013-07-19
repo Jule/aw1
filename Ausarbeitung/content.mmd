@@ -107,6 +107,8 @@ In this section, selected techniques will be explained in context of the concret
 <!--\todoin{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
 }-->
 
+<!--\todoin{Perhaps say something about exploitable concurrency}-->
+
 ## ARM NEON SIMD [arm-neon]
 
 The ARM NEON extension is a general-purpose 128-bit SIMD architecture available in ARMv7. It is included in the ARM Cortex-A9 processors that can be found on the Zynq 7000 <!--\citep{Jang2011}-->.
@@ -130,7 +132,9 @@ Even though the NEON engine is realized as part of the ARM core, it has a comple
 
 ## Pipeline Pattern
 
+The pipeline pattern is a technique that can be used to  parallelize problems where there is a sequence of operations applied to a stream of data.
 
+<!--\fig{pipeline}{TODO}-->
 
 <!--\todoin{Describe Pipeline Pattern as well as applications, pros and cons}-->
 
