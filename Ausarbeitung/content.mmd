@@ -8,18 +8,20 @@ latex footer:       x3-paper-end
 
 Embedded platforms and applications are being used throughout many industries, including telecommunication, robotics, medical and automotive <!--\citep{Wang2013}-->. <!--\citet{Campeanu2013}--> states that nowadays it is increasingly common to build embedded systems on heterogenous platforms, containing multiple computational units such as multi-core CPUs, GPUs and FPGAs. If all these components are used to the full extent of their capabilities, such a setup enables better performance than could be previously achieved on embedded platforms.
 
-This is an important shift, since applications running on these platforms become more and more complex, and their performance requirements have to be satisfied. In the past, not only on embedded platforms, this was commonly achieved by boosting processor clock rates. But due to both intractable physical limitations as well as practical engineering considerations, increasing processor clock rates is no longer a feasible approach <!--\citep{Cantrill2008}-->.
+This is an important shift, since applications running on these platforms become more and more complex, and their performance requirements have to be satisfied. In the past, not only on embedded platforms, this was commonly achieved by boosting processor clock rates. But due to both intractable physical limitations as well as practical engineering considerations and requirements (i.e. low power consumption for a battery-powered devices), increasing processor clock rates is no longer a feasible approach <!--\citep{Cantrill2008}-->.
 
 The performance gains possible on heterogenous embedded platforms are a result of the hardware-level parallelism that is achievable on these platforms. But unfortunately, exploiting these parallelism features still is a considerable challenge, given the tools and programming concepts widely in use today <!--\citep{Wang2013,Cantrill2008}-->.
 
-Because of the mentioned increase in complexity and performance requirements in embedded applications, and considering that clock rates can't be expected to increase significantly anymore, research in the area of concurrent applications has taken an important place in the computer science research community. This can be seen in <!--\autoref{fig:concurrency-publications}-->, which shows an increasing number of publications related to concurrency over the last years.
+Because of the mentioned increase in complexity and performance requirements in embedded applications, and considering that clock rates can't be expected to increase significantly anymore, research in the area of concurrent applications has taken an important place in the computer science research community. As a result, an increasing number of publications related to concurrency have been presented over the last 7 years (compare <!--\autoref{fig:concurrency-publications}-->).
 
 <!--\fig{concurrency-publications}{A strong increase in publications related to concurrency can be observed over the last years. These numbers were researched from the \citet{IEEEXplore2013} digital library as well as the \citet{ACMDigitalLibrary2013} digital library.}-->
 
 
 In context of the <!--\citet{FAUST2013}--> at the Hamburg University of Applied Sciences, a specific embedded application in need of parallelization is an obstacle detection system in cooperation with a lane guiding control. Evaluating the distance data measured by a laser scanner and the image stream providing extracted road marking parameters constitues a dataflow parallelization problem, for which suitable algorithms must be researched and compared. Therefore, this essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism, especially those which are suitable for dataflow problems. Said evaluation is done in context of a modern multiprocessor system-on-chip platform (MPSoC), the Xilinx Zynq 7000. The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments. Additionally, the current lack of widely used tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the "Go" programming language, and of how it might be used on embedded platforms to increase developer efficiency.
 
-The evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems, i.e. those having multiple processors or processing cores with a shared memory. Other parallelism concepts for architectures such as Distributed Memory Access or Nonuniform Memory Access will not be discussed.
+The evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems, i.e. those having multiple processors or processing cores with shared memory. Other parallelism concepts for architectures such as Distributed Memory Access or Nonuniform Memory Access will not be discussed.
+
+<!--\todoin{figure out what schwarz means by this: because the availabitility of an MPSoC platform for implementation cycles during the master project  is a precondition.}-->
 
 <!--\todoin{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
 
@@ -54,6 +56,9 @@ This laserscanner-based obstacle detection system was realized by <!--\citet{Jes
 <!--\citep{Andresen2013}-->
 
 <!--\todoin{Base this on Andresen's MA thesis}-->
+
+<!--\todoin{Schwarz: SW/HW Partionierungsansatz:
+Pixelstrom-Verabeitung im rekonfigurierbaren FPGA (Programmable Logic) und Spurführung im Bildtakt mit Threads.}-->
 
 * hardware software paritionierung
     * pixelstrom auf fpga
@@ -108,6 +113,9 @@ A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD sys
 
 In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If available, current research based on these techniques will be highlighted.
 
+<!--\todoin{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
+}-->
+
 ## ARM NEON SIMD [arm-neon]
 
 The ARM NEON extension is a general-purpose 128-bit SIMD architecture available in ARMv7. It is included in the ARM Cortex-A9 processors that can be found on the Zynq 7000 <!--\citep{Jang2011}-->.
@@ -141,6 +149,15 @@ Even though the NEON engine is realized as part of the ARM core, it has a comple
 
 <!--\clearpage-->
 # The "Go" programming language
+
+<!--\todoin{Im Preface:
+..., but over 80% of all enbedded sysytems are developed
+ in this classical language.
+Design Patterns for Embedded Systems in C: An Embedded Software Engineering Toolkit \url{http://goo.gl/2S1dX}
+}-->
+
+<!--\todoin{Software Engineering for Embedded Systems: Methods, Practical Techniques, and Applications (Expert Guide) \url{http://goo.gl/vM360}
+}-->
 
 This section will give a short overview of the programming language "Go", as well as provide a comparison to C, since it is the most common programming language used on embedded platforms<!--\todo{citation needed}-->. To wrap up this section, an example implementation of the pipeline pattern will be presented and explained.
 
@@ -182,6 +199,12 @@ The communication between goroutines is realized through channels (the language 
 <!--\todoin{Ausblick (wie geht es weiter?)}-->
 
 <!--\todoin{Hier im Ausblick erwähnen, dass Performance-Vergleiche anhand eigener Anwendungen folgen, bezogen auf SIMD stuff aber auch Go auf embedded (vs. C/C++)}-->
+
+<!--\todoin{Literatur Recherche zu
+Concurrency und aktuellen MPSOC.
+(Multiprocessor System-on-Chip: Hardware Design and Tool Integration)
+Paralleliserung von Laserscanner und Kamera Datenstromverarbeitung unter Linux mit GO im Wettstreit mit C-Threads-pur.
+}-->
 
 
 
