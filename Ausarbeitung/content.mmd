@@ -107,6 +107,13 @@ The NEON extension is composed of 32 64-bit registers, which can alternatively b
 
 <!--\fig{NEON-SIMD}{Visualization of the NEON SIMD data flow. Assuming 64-bit source registers, each of the operands is 16-bit wide. The blue squares represent the operations applied to the registers. Four operations are applied, and thus there are four lanes.}-->
 
+<!--\todoin{Add a few standard operations, and maybe a short example}-->
+
+Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline as well as a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. Since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, pre-loading can
+
+
+
+
 <!--\todoin{Overview of how the NEON engine applies SIMD techniques}-->
 
 <!--\todoin{Point to results at \citep{AlchemyLab2013} after verifying them, since they show the possible performance increase with SIMD very well.}-->
