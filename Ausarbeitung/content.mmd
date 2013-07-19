@@ -27,7 +27,7 @@ The evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems
 
 
 
-
+<!--\clearpage-->
 # Platform and problem description
 
 In the <!--\citet{FAUST2013}-->, the Zynq 7000 SoC manufactured by Xilinx is currently being used for embedded application development. At present, there are two major subsystems that need to run in parallel on this platform, which are part of a technology field trial of advanced driver assistance systems:
@@ -35,7 +35,7 @@ In the <!--\citet{FAUST2013}-->, the Zynq 7000 SoC manufactured by Xilinx is cur
 1. An obstacle detection system (<!--\autoref{obstacle-detection}-->)
 1. A lane guiding control system (<!--\autoref{lane-guiding-control}-->)
 
-The Xilinx Zynq 7000 architecture is composed of a dual-core ARM Cortex-A9 CPU as well as an on-chip programmable logic unit (FPGA). The ARM Cortex-A9 additionally contains the ARM NEON general-purpose SIMD engine, for which an overview will be given in <!--\autoref{arm-neon}--> <!--\citep{Xilinx2013}-->.
+The Xilinx Zynq 7000 architecture is composed of a dual-core ARM Cortex-A9 CPU as well as an on-chip programmable logic unit (FPGA). The ARM Cortex-A9 additionally contains the ARM NEON general-purpose SIMD engine <!--\citep{Xilinx2013}-->, for which an overview will be given in <!--\autoref{arm-neon}-->.
 
 
 
@@ -51,17 +51,11 @@ In his implementation, <!--\citet{Jestel2013}--> employs two worker threads assi
 
 ## Lane guiding control system [lane-guiding-control]
 
-<!--\citep{Andresen2013}-->
+The previously developed System-on-Chip Autonomous Vehicle architecture devised by <!--\citet{Johannsen2013}--> was ported to the Zynq 7000 platform by <!--\citet{Andresen2013}-->. When porting the architecture he focused on distribution of computational tasks between the available CPU cores and the programmable logic (FPGA), thus making optimal use of the available resources in order to accommodate additional subsystems in the future (such as the obstacle detection system).
 
-<!--\todoin{Base this on Andresen's MA thesis}-->
+The resulting system uses the FPGA for processing of the raw image data received from a 60 FPS camera with a resolution of 640x480px. The output data from the FPGA is then evaluated by one of the available CPU cores, which then calculates the steering parameters to keep the vehicle driving in its lane. The other core manages the computations executed on the FPGA as well as any operating system tasks that may arise.
 
-<!--\todoin{Schwarz: SW/HW Partionierungsansatz:
-Pixelstrom-Verabeitung im rekonfigurierbaren FPGA (Programmable Logic) und Spurführung im Bildtakt mit Threads.}-->
-
-* hardware software paritionierung
-    * pixelstrom auf fpga
-    * rest auf linux, ohne echtzeitpatch
-    * bildrate mit 60fps eher harmlos, entsprechend bei mehr datenrate eventuell linux keine lösung
+The developed system runs on a Linux Kernel v3.2, and it should be noted that the system's timing constraints for the lane guidance were kept despite the fact that no real-time patch (e.g. `CONFIG PREEMPT RT`) had been applied to the kernel (the scheduler was set to `SCHED FIFO`). It is reasonable to assume that this was possible due to the relatively low framerate and resolution of the camera, which resulted in an low overall system load. With increasing load, however, it might not be possible to keep timing constraints without either applying a real-time patch to the kernel or using a real-time operating system (RTOS).
 
 
 
