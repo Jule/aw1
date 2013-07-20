@@ -130,11 +130,7 @@ Even though the NEON engine is realized as part of the ARM core, it has a comple
 
 ## Pipeline Pattern
 
-
-
 The pipeline pattern is a technique that can be used to  parallelize problems composed of a sequence of operations which have to be applied to a sequence of data elements, also called a "dataflow problem" <!--\citep{Mattson2004}-->. Pipelining techniques are widely used throughout the computing industry: at a very low level, virtually every modern microprocessors is equipped with an instruction pipeline to increase performance <!--\citep{Finlayson2013}-->. Higher up in the abstraction hierarchy, UNIX applications and shell scripts often rely on "pipes" as an interprocess communication mechanism.
-
-
 
 An example of a dataflow problem is the application of a sequence of image filters to a sequence of source images (like the one depicted in <!--\autoref{fig:image-pipeline}-->). While it isn't usually possible to apply multiple of these image filters to the same image at the same time, because they requires the output from the previous filter, each of them can be applied to **different images** concurrently.
 
@@ -161,9 +157,6 @@ In the first time frame, only the first pipeline stage is active, processing $\o
 
 <!--\clearpage-->
 # The "Go" programming language
-
-<!--\todoin{Software Engineering for Embedded Systems: Methods, Practical Techniques, and Applications (Expert Guide) \url{http://goo.gl/vM360}
-}-->
 
 This section will give a short overview of the programming language "Go", as well as provide a comparison to C, since it is the most common programming language used on embedded platforms <!--\citep{Douglass2011}-->. To wrap up this section, an example implementation of the pipeline pattern will be presented and explained.
 
@@ -193,8 +186,6 @@ The language includes additional features, which do not deal with concurrency, b
 
 This section highlights the most important differences between Go and C. At this time it is unfortunately not yet possible to present proper results of a performance comparison between the two languages. This is due to the fact that benchmarking in general is a "notoriously delicate" task. It becomes even more complicated when one is trying to perform so-called micro-benchmarks, where the performance of two short piece of code (as opposed to two applications) written in different languages is to be compared <!--\citep{Gil2011}-->. One of the reasons for this complexity is that it is inherently complicated to write two pieces of code in two different languages, such that both code pieces do exactly the same thing in the most performant way possible. Writing such code requires advanced knowledge of the language, as for example choosing the wrong datastructure in one of the code pieces may result in completely misleading benchmark results, from which false conclusions will be drawn.
 
-
-
 <!--\todoin{point out that extensive practical research will have to be carried out in order to determine whether or not the language can be productively used on embedded platforms.}-->
 
 <!--\todoin{Syntactical/Semantical differences as well as performance comparisons, if possible. Context switch time, garbage collection impact, plain performance (e.g. loops) compared to C, all that stuff.}-->
@@ -213,6 +204,9 @@ This section highlights the most important differences between Go and C. At this
 <!--\todoin{Komprimierte Darstellung der wesentlichen Inhalte}-->
 
 <!--\todoin{Ausblick (wie geht es weiter?)}-->
+
+<!--\todoin{Schwarz: Software Engineering for Embedded Systems: Methods, Practical Techniques, and Applications (Expert Guide)? \url{http://goo.gl/vM360}
+}-->
 
 <!--\todoin{Hier im Ausblick erwähnen, dass Performance-Vergleiche anhand eigener Anwendungen folgen, bezogen auf SIMD stuff aber auch Go auf embedded (vs. C/C++)}-->
 
