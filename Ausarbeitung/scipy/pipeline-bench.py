@@ -44,7 +44,7 @@ rcParams.update(params)
 fig = figure()
 fig.subplots_adjust(bottom=0.175, left=0.15)
 
-plot(x,y)
+plot(x,y, 'o-')
 xscale("log")
 ylabel('Computation time')
 xlabel('Number of workers')
