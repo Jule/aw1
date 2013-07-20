@@ -3,23 +3,28 @@
 require 'pdf-reader'
 require 'pp'
 
-reader = PDF::Reader.new("content.pdf")
+#reader = PDF::Reader.new("content.pdf")
 
-$text = ""
-reader.pages.each do |page|
+$text = contents = File.read('content.mmd')
 
-  $text = "#{$text} #{page.text}"
-end
 
+# reader.pages.each do |page|
+#   $text = "#{$text} #{page.text}"
+# end
+
+$text.gsub!("<!--(.+?)-->", " ")
 $text.gsub!("\t", " ")
 $text.gsub!("\n", " ")
 $text.gsub!(/[^a-zA-Z ]/, "")
+
+#puts $text
+#abort "foo"
 
 while $text.include?("  ")
   $text.gsub!("  ", " ")
 end
 
-words = $text.split(" ")
+words = $text.split(" ").map { |x| x.downcase }
 
 def groupCount(arr)
   arr.group_by { |w| w }
