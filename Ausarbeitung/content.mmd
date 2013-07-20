@@ -153,9 +153,11 @@ In the first time frame, only the first pipeline stage is active, processing $\o
 
 <!--\todoin{Try to make a nice transition from pipeline pattern to Go, so that the reader can follow along}-->
 
+Recent research in this area includes the concept of "pipelets" by <!--\citet{Jahn2013}-->. It describes pipeline stages which are self-organizing, by monitoring computational demands and communication time, and dynamically remapping tasks using the resulting information. As such, pipelets are able to group tasks such that the communication overhead is minimized and bottlenecks are reduced.
 
 
-<!--\clearpage-->
+
+
 # The "Go" programming language
 
 This section will give a short overview of the programming language "Go", as well as provide a comparison to C, since it is the most common programming language used on embedded platforms <!--\citep{Douglass2011}-->. To wrap up this section, an example implementation of the pipeline pattern will be presented and explained.
