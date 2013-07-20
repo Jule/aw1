@@ -132,9 +132,28 @@ Even though the NEON engine is realized as part of the ARM core, it has a comple
 
 ## Pipeline Pattern
 
-The pipeline pattern is a technique that can be used to  parallelize problems where there is a sequence of operations applied to a stream of data.
 
-<!--\fig{pipeline}{TODO}-->
+
+The pipeline pattern is a technique that can be used to  parallelize problems composed of a sequence of operations which have to be applied to a sequence of data elements, also called a "dataflow problem" <!--\citep{Mattson2004}-->. Pipelining techniques are widely used throughout the computing industry: at a very low level, virtually every modern microprocessors is equipped with an instruction pipeline to increase performance <!--\citep{Finlayson2013}-->. Higher up in the abstraction hierarchy, UNIX applications and shell scripts often rely on "pipes" as an interprocess communication mechanism.
+
+
+
+An example of a dataflow problem is the application of a sequence of image filters to a sequence of source images (like the one depicted in <!--\autoref{fig:image-pipeline}-->). While it isn't usually possible to apply multiple of these image filters to the same image at the same time, because they requires the output from the previous filter, each of them can be applied to **different images** concurrently.
+
+<!--\fig{image-pipeline}{wat}-->
+
+The pipelining technique then consists of dividing these sequential operations (e.g. image filters) into several pipeline stages. Each of the pipeline stages only ever processes a single data element (e.g. image) at the same time, but all pipeline stages work on separate images concurrently, as shown in <!--\autoref{fig:pipeline}-->. This requires the pipeline stages to be interconnected, since every stage must pass on the computed data to the next stage and receive the next data to compute from the previous stage.
+
+In order for a pipelined computation to have positive performance impact, some important constraints must be kept:
+
+1. The time it takes to compute each stage's result must be much higher than the time it takes to pass the data on to the next stage. If this is not the case, the communication overhead introduced by the pipeline stages will outweigh the benefit of computing the stages concurrently. <!--\todo{citation needed}-->
+
+1. Optimally, each stage takes about the same time to compute. If any pipeline stage completes its calculation much faster, it will be stalled by the subsequent stages, because it cannot pass on the computed data. On the other hand, if any pipeline stage is much slower than the others, subsequent stages will often have to wait for data to arrive, thus wasting computing time.
+
+
+
+<!--\fig{pipeline}{A four stage pipeline processing four data elements.
+In the first time frame, only the first pipeline stage is active, processing $\operatorname{Data}_1$ (all other stages are idle). In the second time frame, $\operatorname{Data}_2$ is being processed in stage one, $\operatorname{Data}_1$ in stage two, and so on.}-->
 
 <!--\todoin{Describe Pipeline Pattern as well as applications, pros and cons}-->
 

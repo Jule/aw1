@@ -20,6 +20,12 @@ include multiprocessor systems, and as such are almost universally available in 
 * But there are also things like GPUs, SIMD etc
 
 
+# Pipeline pattern
+
+The pipeline concept consists of taking a sequential problem, such as the application of several image filters to a sequence of source images, and dividing this sequential process into so-called "stages". As an example, there is a four filter sequence depicted in <!--\autoref{fig:image-pipeline}-->, where the first step is resizing the image, the next step is to convert it to grayscale, etc. Naturally, it is not possible to perform the histogram equalization at the same time as the perspective correction, since the latter has to be applied to the already equalized image.
+
+By dividing the sequential application of the filters into stages that each apply a single filter,
+
 # Gliederungshinweise
 
 
