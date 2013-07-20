@@ -19,11 +19,9 @@ Because of the mentioned increase in complexity and performance requirements in 
 
 In context of the <!--\citet{FAUST2013}--> at the Hamburg University of Applied Sciences, a specific embedded application in need of parallelization is an obstacle detection system in cooperation with a lane guiding control. Evaluating the distance data measured by a laser scanner and the image stream providing extracted road marking parameters constitues a dataflow parallelization problem, for which suitable algorithms must be researched and compared. Therefore, this essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism, especially those which are suitable for dataflow problems. Said evaluation is done in context of a modern multiprocessor system-on-chip platform (MPSoC), the Xilinx Zynq 7000. The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments. Additionally, the current lack of widely used tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the "Go" programming language, and of how it might be used on embedded platforms to increase developer efficiency.
 
-The evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems, i.e. those having multiple processors or processing cores with shared memory. Other parallelism concepts for architectures such as Distributed Memory Access or Nonuniform Memory Access will not be discussed.
+Given that the FAUST project focuses on MPSoC platforms for implementation, the evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems, i.e. those having multiple processors or processing cores with shared memory. Other parallelism concepts for architectures such as Distributed Memory Access or Nonuniform Memory Access will not be discussed.
 
-<!--\todoin{figure out what schwarz means by this: because the availabitility of an MPSoC platform for implementation cycles during the master project  is a precondition.}-->
-
-<!--\todoin{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
+<!--\todo{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
 
 
 
@@ -104,10 +102,10 @@ A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD sys
 
 In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If available, current research based on these techniques will be highlighted.
 
-<!--\todoin{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
+<!--\todo{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
 }-->
 
-<!--\todoin{Perhaps say something about exploitable concurrency}-->
+<!--\todo{Perhaps say something about exploitable concurrency}-->
 
 ## ARM NEON SIMD [arm-neon]
 
@@ -117,7 +115,7 @@ The NEON extension is composed of 32 64-bit registers, which can alternatively b
 
 <!--\fig{NEON-SIMD}{Visualization of the NEON SIMD data flow. Assuming 64-bit source registers, each of the operands is 16-bit wide. The blue squares represent the operations applied to the registers. Four operations are applied, and thus there are four lanes.}-->
 
-<!--\todoin{Add a few standard operations, and maybe a short example}-->
+<!--\todo{Add a few standard operations, and maybe a short example}-->
 
 Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. Since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, pre-loading can
 
@@ -140,7 +138,7 @@ The pipeline pattern is a technique that can be used to  parallelize problems co
 
 An example of a dataflow problem is the application of a sequence of image filters to a sequence of source images (like the one depicted in <!--\autoref{fig:image-pipeline}-->). While it isn't usually possible to apply multiple of these image filters to the same image at the same time, because they requires the output from the previous filter, each of them can be applied to **different images** concurrently.
 
-<!--\fig{image-pipeline}{wat}-->
+<!--\fig{image-pipeline}{Example of a sequence of image filters. These filters need to be applied sequentally to every image in order to get the correct result.}-->
 
 The pipelining technique then consists of dividing these sequential operations (e.g. image filters) into several pipeline stages. Each of the pipeline stages only ever processes a single data element (e.g. image) at the same time, but all pipeline stages work on separate images concurrently, as shown in <!--\autoref{fig:pipeline}-->. This requires the pipeline stages to be interconnected, since every stage must pass on the computed data to the next stage and receive the next data to compute from the previous stage.
 
