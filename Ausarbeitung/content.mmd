@@ -117,16 +117,19 @@ The NEON extension is composed of 32 64-bit registers, which can alternatively b
 
 <!--\todo{Add a few standard operations, and maybe a short example}-->
 
-Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. Since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, pre-loading can
+Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. This is important since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, because the processor can not perform useful operations while loading memory into the cache.
 
-
-
+A performance comparison conducted by <!--\citet{AlchemyLab2013}--> (not associated with ARM Ltd.) shows that, in case of the NEON engine, pre-loading subsequently needed data into the caches while performing SIMD operations can increase performance by a factor of 2.4 for TODO <!--\todo{mention the algorithm which was benchmarked}-->. It should be noted that this is the performance increase compared to an implementation that already uses the NEON engine. When comparing the NEON implementation with pre-loading to an implementation in pure C, the performance increase factor was 11.946.
 
 <!--\todoin{Overview of how the NEON engine applies SIMD techniques}-->
 
 <!--\todoin{Point to results at \citep{AlchemyLab2013} after verifying them, since they show the possible performance increase with SIMD very well.}-->
 
-<!--\fig{NEON-benchmark}{TODO}-->
+<!--\todo{Perhaps include some sourcecode of the alchemy lab performance comparison}-->
+
+
+
+<!--\fig{NEON-benchmark}{Results of a performance comparison conducted by \citet{AlchemyLab2013} (not associated with ARM Ltd.).}-->
 
 
 
