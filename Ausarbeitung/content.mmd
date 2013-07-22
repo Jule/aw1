@@ -119,15 +119,9 @@ The NEON extension is composed of 32 64-bit registers, which can alternatively b
 
 Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. This is important since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, because the processor can not perform useful operations while loading memory into the cache.
 
-A performance comparison conducted by <!--\citet{AlchemyLab2013}--> (not associated with ARM Ltd.) shows that, in case of the NEON engine, pre-loading subsequently needed data into the caches while performing SIMD operations can increase performance by a factor of 2.4 for TODO <!--\todo{mention the algorithm which was benchmarked}-->. It should be noted that this is the performance increase compared to an implementation that already uses the NEON engine. When comparing the NEON implementation with pre-loading to an implementation in pure C, the performance increase factor was 11.946.
+A performance comparison conducted by <!--\citet{AlchemyLab2013}--> (not associated with ARM Ltd.) shows that, in case of the NEON engine, pre-loading subsequently needed data into the caches while performing SIMD operations can increase performance by a factor of 2.4 for an example algorithm containing multiplication, addition and divison with rounding (data size about 4MiB). It should be noted that this is the performance increase compared to an implementation that already uses the NEON engine. When comparing the NEON implementation with pre-loading to an implementation in pure C, the performance increase factor is 11.946 (compare <!--\autoref{fig:NEON-benchmark}-->). The algorithm, which does not serve a particular purpose other than benchmarking, is shown in <!--\autoref{code:simd-bench}-->.
 
-<!--\todoin{Overview of how the NEON engine applies SIMD techniques}-->
-
-<!--\todoin{Point to results at \citep{AlchemyLab2013} after verifying them, since they show the possible performance increase with SIMD very well.}-->
-
-<!--\todo{Perhaps include some sourcecode of the alchemy lab performance comparison}-->
-
-
+<!--\includec{simd-bench.c}{simd-bench}{Algorithm specifically crafted for a performance comparison between C code and the NEON engine. Source: \citet{AlchemyLab2013}}-->
 
 <!--\fig{NEON-benchmark}{Results of a performance comparison conducted by \citet{AlchemyLab2013} (not associated with ARM Ltd.).}-->
 
@@ -145,7 +139,7 @@ The pipelining technique then consists of dividing these sequential operations (
 
 In order for a pipelined computation to have positive performance impact, some important constraints must be kept:
 
-1. The time it takes to compute each stage's result must be much higher than the time it takes to pass the data on to the next stage. If this is not the case, the communication overhead introduced by the pipeline stages will outweigh the benefit of computing the stages concurrently. <!--\todo{citation needed}-->
+1. The time it takes to compute each stage's result must be much higher than the time it takes to pass the data on to the next stage. If this is not the case, the communication overhead introduced by the pipeline stages will outweigh the benefit of computing the stages concurrently <!--\citep{Mattson2004}-->.
 
 1. Optimally, each stage takes about the same time to compute. If any pipeline stage completes its calculation much faster, it will be stalled by the subsequent stages, because it cannot pass on the computed data. On the other hand, if any pipeline stage is much slower than the others, subsequent stages will often have to wait for data to arrive, thus wasting computing time.
 
@@ -154,11 +148,9 @@ In order for a pipelined computation to have positive performance impact, some i
 <!--\fig{pipeline}{A four stage pipeline processing four data elements.
 In the first time frame, only the first pipeline stage is active, processing $\operatorname{Data}_1$ (all other stages are idle). In the second time frame, $\operatorname{Data}_2$ is being processed in stage one, $\operatorname{Data}_1$ in stage two, and so on.}-->
 
-<!--\todoin{Describe Pipeline Pattern as well as applications, pros and cons}-->
-
-<!--\todoin{Try to make a nice transition from pipeline pattern to Go, so that the reader can follow along}-->
-
 Recent research in this area includes the concept of "pipelets" by <!--\citet{Jahn2013}-->. It describes pipeline stages which are self-organizing, by monitoring computational demands and communication time, and dynamically remapping tasks using the resulting information. As such, pipelets are able to group tasks such that the communication overhead is minimized and bottlenecks are reduced.
+
+Since the pipeline pattern is very well applicable to the concurrency tools built into the Go programming language, a short example implementation of the pattern in Go will be presented in the next section.
 
 
 

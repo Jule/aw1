@@ -42,12 +42,31 @@
     framesep=3mm
 }
 
+\newmintedfile{c}{
+    numbersep=5pt,
+    linenos,
+    frame=lines,
+    fontsize=\footnotesize,
+    framesep=3mm
+}
+
 % 1st param: File to load
 % 2nd param: Label
 % 3rd param: Caption
 \newcommand{\includego}[3]{
     \begin{listing}
         \gofile{code/#1}
+        \caption{#3}
+        \label{code:#2}
+    \end{listing}
+}
+
+% 1st param: File to load
+% 2nd param: Label
+% 3rd param: Caption
+\newcommand{\includec}[3]{
+    \begin{listing}
+        \cfile{code/#1}
         \caption{#3}
         \label{code:#2}
     \end{listing}
