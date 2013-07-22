@@ -122,7 +122,7 @@ A performance comparison conducted by <!--\citet{AlchemyLab2013}--> (not associa
 
 
 
-## Pipeline Pattern
+## Pipeline Pattern [pipeline-pattern]
 
 The pipeline pattern is a technique that can be used to  parallelize problems composed of a sequence of operations which have to be applied to a sequence of data elements, also called a "dataflow problem" <!--\citep{Mattson2004}-->. Pipelining techniques are widely used throughout the computing industry: at a very low level, virtually every modern microprocessors is equipped with an instruction pipeline to increase performance <!--\citep{Finlayson2013}-->. Higher up in the abstraction hierarchy, UNIX applications and shell scripts often rely on "pipes" as an interprocess communication mechanism. When considering application development, the pipeline pattern is often used because it allows the transformation of a sequential problem to a parallel solution with relatively low effort, especially without a full rewrite of a codebase <!--\citep{PreudHomme2012}-->. The pipeline pattern is a MIMD technique.
 
@@ -200,11 +200,9 @@ In this example, an implementation of a pipeline in Go will be shown. For the sa
 
 The initializer first creates the necessary channels for the pipeline, by invoking `make()` with the type "`chan int`" (lines 4-6). The pipeline only needs three channels, since the first stage's output channel is also the second stage's input channel. The initializer then populates the first stage's input channel with values (ommited in <!--\autoref{code:go-pipeline-initializer}-->), and invokes both pipeline stage functions as goroutines (line 13+14), so that they execute concurrenly. Lastly, the initializer waits until all values have been processed by the second stage (line 17-19).
 
-
-
 <!--\includego{go-pipeline-stages.go}{go-pipeline-stages}{The first pipeline stages multiplies every element by two, the second pipeline stage prints the elements to the console.}-->
 
-<!--\todo{Note that most other pattern can also be expressed in Go. Say why this one was chosen}-->
+The stages are a perfect match for the pipeline stage structure previously described in <!--\autoref{pipeline-pattern}-->. When looking at the first stage, the first line is the function signature, taking the input and output channel as paramters. In Go, a for-loop such as "`for { }`", that is without parameters, executes an infinite loop. As such, the pipeline stages reads data from the input channel into the "`current`" variable until the program terminates (line 3). Since reading from an empty channel is a blocking operations, the loop does not perform busy-waiting, which would waste many CPU cycles. On line 4 the operation on the current element is performed, and on line 5 the processed data is written to the output channel of the stage.<!--\todo{Note that most other pattern can also be expressed in Go. Say why this one was chosen}-->
 
 
 
