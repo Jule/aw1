@@ -19,9 +19,7 @@ Because of the mentioned increase in complexity and performance requirements in 
 
 In context of the <!--\citet{FAUST2013}--> at the Hamburg University of Applied Sciences, a specific embedded application in need of parallelization is an obstacle detection system in cooperation with a lane guiding control. Evaluating the distance data measured by a laser scanner and the image stream providing extracted road marking parameters constitues a dataflow parallelization problem, for which suitable algorithms must be researched and compared. Therefore, this essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism, especially those which are suitable for dataflow problems. Said evaluation is done in context of a modern multiprocessor system-on-chip platform (MPSoC), the Xilinx Zynq 7000. The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments. Additionally, the current lack of widely used tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the "Go" programming language, and of how it might be used on embedded platforms to increase developer efficiency.
 
-Given that the FAUST project focuses on MPSoC platforms for implementation, the evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems, i.e. those having multiple processors or processing cores with shared memory. Other parallelism concepts for architectures such as Distributed Memory Access or Nonuniform Memory Access will not be discussed.
-
-<!--\todo{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
+Given that the FAUST project focuses on MPSoC platforms for implementation, the evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems, i.e. those having multiple processors or processing cores with shared memory. Other parallelism concepts for architectures such as Distributed Memory Access or Nonuniform Memory Access will not be discussed.<!--\todo{Übersicht zu den einzelnen Kapiteln, sodass der rote Faden zu den Zielvorstellungen deutlich wird.}-->
 
 
 
@@ -100,9 +98,7 @@ A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD sys
 
 # Parallelization Techniques
 
-In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If available, current research based on these techniques will be highlighted.
-
-<!--\todo{Perhaps say something about exploitable concurrency}-->
+In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If available, current research based on these techniques will be highlighted. <!--\todo{Perhaps say something about exploitable concurrency}-->
 
 ## ARM NEON SIMD [arm-neon]
 
@@ -112,9 +108,7 @@ The NEON extension is composed of 32 64-bit registers, which can alternatively b
 
 <!--\fig{NEON-SIMD}{Visualization of the NEON SIMD data flow. Assuming 64-bit source registers, each of the operands is 16-bit wide. The blue squares represent the operations applied to the registers. Four operations are applied, and thus there are four lanes.}-->
 
-<!--\todo{Add a few standard operations, and maybe a short example}-->
-
-Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. This is important since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, because the processor can not perform useful operations while loading memory into the cache.
+<!--\todo{Add a few standard operations, and maybe a short example}-->Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. This is important since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, because the processor can not perform useful operations while loading memory into the cache.
 
 A performance comparison conducted by <!--\citet{AlchemyLab2013}--> (not associated with ARM Ltd.) shows that, in case of the NEON engine, pre-loading subsequently needed data into the caches while performing SIMD operations can increase performance by a factor of 2.4 for an example algorithm containing multiplication, addition and divison with rounding (data size about 4MiB). It should be noted that this is the performance increase compared to an implementation that already uses the NEON engine. When comparing the NEON implementation with pre-loading to an implementation in pure C, the performance increase factor is 11.946 (compare <!--\autoref{fig:NEON-benchmark}-->). The algorithm, which does not serve a particular purpose other than benchmarking, is shown in <!--\autoref{code:simd-bench}-->.
 
@@ -176,9 +170,7 @@ The communication between goroutines is realized through channels (the language 
 \includego{channels.go}{gochannels}{Syntactical overview of channel usage in Go.}
 -->
 
-<!--\todoin{mention defer}-->
-
-The language includes additional features, which do not deal with concurrency, but have been added for developer convenience. Some of these features include multiple return parameters, slices (which provide a more powerful interface to C-style arrays), garbage collection (which will be discussed in the comparison to C) and built-in dependency management.
+<!--\todo{mention defer? }-->The language includes additional features, which do not deal with concurrency, but have been added for developer convenience. Some of these features include multiple return parameters, slices (which provide a more powerful interface to C-style arrays), garbage collection (which will be discussed in the comparison to C) and built-in dependency management.
 
 
 
@@ -198,15 +190,17 @@ To summarize it can be said that, while Go is a compiled and statically typed la
 
 ## Example: Pipeline Pattern in Go
 
-<!--\todo{intro}-->
-
-The implementation consists of two parts: the initializer and the stages.
+In this example, an implementation of a pipeline in Go will be shown. For the sake of brevity, the operations which the pipeline performs are very simple: it first multiplies every input by two (Stage #1) and then prints the value to the console (Stage #2). The implementation consists of two parts: the initializer (<!--\autoref{code:go-pipeline-initializer}-->) and the stages (<!--\autoref{code:go-pipeline-stages}-->).
 
 <!--\includego{go-pipeline-initializer.go}{go-pipeline-initializer}{The pipeline initializer, which creates the necessary channels, fills the pipeline with some elements and invokes the stages.}-->
 
+The initializer first creates the necessary channels for the pipeline, by invoking `make()` with the type "`chan int`" (lines 4-6). The pipeline only needs three channels, since the first stage's output channel is also the second stage's input channel. The initializer then populates the first stage's input channel with values (ommited in <!--\autoref{code:go-pipeline-initializer}-->), and invokes both pipeline stage functions as goroutines (line 13+14), so that they execute concurrenly. Lastly, the initializer waits until all values have been processed by the second stage (line 17-19).
+
+
+
 <!--\includego{go-pipeline-stages.go}{go-pipeline-stages}{The first pipeline stages multiplies every element by two, the second pipeline stage prints the elements to the console.}-->
 
-
+<!--\todo{Note that most other pattern can also be expressed in Go. Say why this one was chosen}-->
 
 
 
