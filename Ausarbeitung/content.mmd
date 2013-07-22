@@ -204,7 +204,7 @@ The initializer first creates the necessary channels for the pipeline, by invoki
 
 The stages are a perfect match for the pipeline stage structure previously described in <!--\autoref{pipeline-pattern}-->. When looking at the first stage, the first line is the function signature, taking the input and output channel as paramters. In Go, a for-loop such as "`for { }`", that is without parameters, executes an infinite loop. As such, the pipeline stages reads data from the input channel into the "`current`" variable until the program terminates (line 3). Since reading from an empty channel is a blocking operations, the loop does not perform busy-waiting, which would waste many CPU cycles. On line 4 the operation on the current element is performed, and on line 5 the processed data is written to the output channel of the stage.
 
-Importantly, the shown pipeline would not have any performance benefit, since the time it takes to communicate between the channels is much larger than the operations within the stages (the multiplication and the writing to the standard output). However, it would be very straight forward to replace the simply operations shown in the example by more complex operations.
+Importantly, the shown pipeline would not have any performance benefit, since the time it takes to communicate between the channels is much larger than the operations within the stages (the multiplication and the writing to the standard output). However, it would be very straight forward to replace the simply operations shown in the example by more complex operations <!--\todo{This still sounds a bit incomplete}-->.
 
 
 <!--\clearpage-->
@@ -234,7 +234,7 @@ Paralleliserung von Laserscanner und Kamera Datenstromverarbeitung unter Linux m
 <!--\todoin{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
 }-->
 
-<!--\todo{short essay outlook: In the course of my master seminar, these hypotheses will be evaluated by extracting performance critical elements from the mentioned FAUST application and implementing them in Go and C, using state of the art dataflow parallelization algorithms. These implementations will then be compared to their original (non-parallelized) counterparts, in terms of performance, ease of implementation and implementation complexity.}-->
+<!--\todoin{short essay outlook: In the course of my master seminar, these hypotheses will be evaluated by extracting performance critical elements from the mentioned FAUST application and implementing them in Go and C, using state of the art dataflow parallelization algorithms. These implementations will then be compared to their original (non-parallelized) counterparts, in terms of performance, ease of implementation and implementation complexity.}-->
 
 
 
