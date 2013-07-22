@@ -132,7 +132,11 @@ An example of a dataflow problem is the application of a sequence of image filte
 
 <!--\fig{image-pipeline}{Example of a sequence of image filters. These filters need to be applied sequentally to every image in order to get the correct result.}-->
 
-The pipelining technique then consists of dividing these sequential operations (e.g. image filters) into several pipeline stages. Each of the pipeline stages only ever processes a single data element (e.g. image) at the same time, but all pipeline stages work on separate images concurrently, as shown in <!--\autoref{fig:pipeline}-->. This requires the pipeline stages to be interconnected, since every stage must pass on the computed data to the next stage and receive the next data to compute from the previous stage.
+The pipelining technique then consists of dividing these sequential operations (e.g. image filters) into several pipeline stages. Each of the pipeline stages only ever processes a single data element (e.g. image) at the same time, but all pipeline stages work on separate images concurrently, as shown in <!--\autoref{fig:pipeline}-->. This requires the pipeline stages to be interconnected, since every stage must pass on the computed data to the next stage and receive the next data to compute from the previous stage. The implementation of a pipeline stage always adheres to the same structure:
+
+1. Receive data from the previous stage
+1. Perform operations on the received data
+1. Pass the data on to the next stage
 
 In order for a pipelined computation to have positive performance impact, some important constraints must be kept:
 
