@@ -17,21 +17,23 @@ Because of the mentioned increase in complexity and performance requirements in 
 <!--\fig{concurrency-publications}{A strong increase in publications related to concurrency can be observed over the last years. These numbers were researched from the \citet{IEEEXplore2013} digital library as well as the \citet{ACMDigitalLibrary2013} digital library.}-->
 
 
-In context of the <!--\citet{FAUST2013}--> at the Hamburg University of Applied Sciences, a specific embedded application in need of parallelization is an obstacle detection system in cooperation with a lane guiding control. Evaluating the distance data measured by a laser scanner and the image stream providing extracted road marking parameters constitues a dataflow parallelization problem, for which suitable algorithms must be researched and compared. Therefore, this essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism, especially those which are suitable for dataflow problems. Said evaluation is done in context of a modern multiprocessor system-on-chip platform (MPSoC), the Xilinx Zynq 7000. The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments. Additionally, the current lack of widely used tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the "Go" programming language, and of how it might be used on embedded platforms to increase developer efficiency.
+In context of the <!--\citet{FAUST2013}--> at the Hamburg University of Applied Sciences, a specific embedded application in need of parallelization is an obstacle detection system in cooperation with a lane guiding control, for which an overview is given in <!--\autoref{platform}-->. Evaluating the distance data measured by a laser scanner and the image stream providing extracted road marking parameters constitues a dataflow parallelization problem, for which suitable algorithms must be researched and compared. Therefore, this essay focuses on the literature evaluation of techniques that allow for the exploitation of potential sources of parallelism, especially those which are suitable for dataflow problems (<!--\autoref{techniques}-->). Said evaluation is done in context of a modern multiprocessor system-on-chip platform (MPSoC), the Xilinx Zynq 7000.
+
+Additionally, the current lack of widely used tools and languages crafted for use in concurrent environments is addressed by giving a short overview of the "Go" programming language (<!--\autoref{golang}-->). It was conceived, among other things, to allow for a highly productive development environment for parallel applications. The hypothesis is thus, that by using the Go programming language to develop parallel applications on embedded platforms, one can increase developer productiveness by allowing the language to take care of tasks such as thread scheduling and memory management. Given that said features come at the cost of performance, their impact on embedded systems must be evaluated (<!--\autoref{go-performance}-->).
 
 Given that the FAUST project focuses on MPSoC platforms for implementation, the evaluation is confined to the area of Symmetric Multiprocessor (SMP) systems, i.e. those having multiple processors or processing cores with shared memory. Other parallelism concepts for architectures such as Distributed Memory Access or Nonuniform Memory Access will not be discussed.
 
-<!--\todo{overview of the different chapters, to create context and a "roten faden"}-->
 
 
 
+# Platform and problem description [platform]
 
-# Platform and problem description
-
-This section covers a short overview of the platform currently being used for embedded application development in the <!--\citet{FAUST2013}-->, the Xilinx Zynq 7000, along with the applications running on that platform. This overview is given to establish a context for the subsequent sections, and to give an idea of recent work. At present, there are two major subsystems that need to run in parallel on this platform, which are part of a technology field trial of advanced driver assistance systems:
+This section covers a short overview of the platform currently being used for embedded application development in the <!--\citet{FAUST2013}-->, the Xilinx Zynq 7000, along with the applications running on that platform (visualized in <!--\autoref{fig:zynq-platform}-->). This overview is given to establish a context for the subsequent sections, and to give an idea of recent work. At present, there are two major subsystems that need to run in parallel on this platform, which are part of a technology field trial of advanced driver assistance systems:
 
 1. An obstacle detection system (<!--\autoref{obstacle-detection}-->)
 1. A lane guiding control system (<!--\autoref{lane-guiding-control}-->)
+
+<!--\fig{zynq-platform}{Overview of the platform being used, as well as its subsystems.}-->
 
 The Xilinx Zynq 7000 architecture is composed of a dual-core ARM Cortex-A9 CPU and an on-chip programmable logic unit (FPGA). The ARM Cortex-A9 additionally contains the ARM NEON general-purpose SIMD engine <!--\citep{Xilinx2013}-->, for which an overview will be given in <!--\autoref{arm-neon}-->.
 
@@ -98,7 +100,7 @@ A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD sys
 
 
 
-# Parallelization Techniques
+# Parallelization Techniques [techniques]
 
 In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If available, current research based on these techniques will be highlighted. <!--\todo{Perhaps say something about exploitable concurrency}-->
 
@@ -152,7 +154,7 @@ Since the pipeline pattern is very well applicable to the concurrency tools buil
 
 
 
-# The "Go" programming language
+# The "Go" programming language [golang]
 
 This section will give a short overview of the programming language "Go", as well as provide a comparison to C, since it is the most common programming language used on embedded platforms <!--\citep{Douglass2011}-->. To wrap up this section, an example implementation of the pipeline pattern will be presented and explained.
 
@@ -176,7 +178,7 @@ The communication between goroutines is realized through channels (the language 
 
 
 
-## Comparison to C
+## Comparison to C [go-performance]
 
 This section highlights the most important differences between Go and C, where the importance is measured against the potential impact a difference may have when developing embedded applications.
 
@@ -190,7 +192,7 @@ To summarize it can be said that, while Go is a compiled and statically typed la
 
 
 
-## Example: Pipeline Pattern in Go
+## Example: Pipeline Pattern in Go [go-implementation]
 
 In this example, an implementation of a pipeline in Go will be shown. For the sake of brevity, the operations which the pipeline performs are very simple: it first multiplies every input by two (Stage #1) and then prints the value to the console (Stage #2). The implementation consists of two parts: the initializer (<!--\autoref{code:go-pipeline-initializer}-->) and the stages (<!--\autoref{code:go-pipeline-stages}-->).
 
@@ -226,10 +228,14 @@ Paralleliserung von Laserscanner und Kamera Datenstromverarbeitung unter Linux m
 
 <!--\todoin{Mention that \citep{Herlihy2012} will be used as an additional "fundation work", since it was revised in 2012 and thus is newer, but was not available to the author until now.}-->
 
-<!--\todoin{Ausblick: As a result, the impact of Go's garbage collector on application performance will have to be closely evaluated}-->
+<!--\todoin{Ausblick: As a result, the impact of Go's garbage collector on application performance will have to be closely evaluated (also scheduling stuff)}-->
+
+<!--\todoin{Mention that the NEON Alchemy Lab stuff must be confirmed.}-->
 
 <!--\todoin{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
 }-->
+
+<!--\todo{short essay outlook: In the course of my master seminar, these hypotheses will be evaluated by extracting performance critical elements from the mentioned FAUST application and implementing them in Go and C, using state of the art dataflow parallelization algorithms. These implementations will then be compared to their original (non-parallelized) counterparts, in terms of performance, ease of implementation and implementation complexity.}-->
 
 
 

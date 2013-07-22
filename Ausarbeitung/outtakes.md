@@ -4,6 +4,8 @@ As modern embedded applications evolve, their performance requirements increase.
 
 Consequently, modern embedded platforms increasingly feature more than a single processing core, thus offering high-performance computing capabilities, while preservering low-power consumption constraints <!--\citep{Wang2013}-->.
 
+The goal is to get a broad overview of the state-of-the-art techniques being used, as well as their up- and downsides, especially in resource-constrained environments.
+
 
 # Techniques
 
