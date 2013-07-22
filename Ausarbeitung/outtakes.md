@@ -26,6 +26,12 @@ The pipeline concept consists of taking a sequential problem, such as the applic
 
 By dividing the sequential application of the filters into stages that each apply a single filter,
 
+
+# Go
+## Comparison to C
+
+<!--\todoin{Syntactical/Semantical differences as well as performance comparisons, if possible. Context switch time, garbage collection impact, plain performance (e.g. loops) compared to C, all that stuff.}-->
+
 # Gliederungshinweise
 
 

@@ -102,9 +102,6 @@ A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD sys
 
 In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If available, current research based on these techniques will be highlighted.
 
-<!--\todo{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
-}-->
-
 <!--\todo{Perhaps say something about exploitable concurrency}-->
 
 ## ARM NEON SIMD [arm-neon]
@@ -187,17 +184,23 @@ This section highlights the most important differences between Go and C, where t
 
 The most important difference between Go and C is Go's usage of garbage collector. In C, memory must be managed by the programmer, which is an important property for embedded systems, since memory is often a very limited resource there. For the Android operating system, which mostly runs on battery powered embedded platforms (smartphones and tablets), the user-facing software ("apps") is written in Java. Since Java is a garbage collected language, the DalvikVM executing the Java bytecode also features a garbage collector. The fact that such a widely used platform uses garbage collection does not imply that it is a good fit for embedded platforms, though. In a recent article, <!--\citet{Crawford2013}--> analyzes the impact of garbage collection on mobile platforms, coming to the conclusion that garbage collection performs well as long as the available memory exceeds the needed memory by a factor of 6 or more. "In a memory constrained environment garbage collection performance degrades exponentially". As a result, the impact of Go's garbage collector on application performance will have to be closely evaluated.
 
-Another important difference is the existence of goroutines. In C, in order to create a concurrent execution path, an operating system thread must be created. Go on the other hand creates a fixed pool of operating system threads, onto which created goroutines are mapped dynamically at runtime. This is achieved through Go's own scheduler, which is embedded into every compiled application. Having two separate schedulers (from the operating system and from Go) may have adverse effects on performance, since both schedulers are independent. While it would be possible to assign the highest operating system scheduling priority to the Go process (similar to the approach by <!--\citet{Jestel2013}-->), it would still be difficult to predict the timing behavior of a Go application. Accordingly, Go cannot be used for hard real-time applications in its current state, and its applicability for a soft real-time environment remains to be determined. <!--\todo{Cite needed?}-->
+Another important difference is the existence of goroutines. In C, in order to create a concurrent execution path, an operating system thread must be created. Go on the other hand creates a fixed pool of operating system threads, onto which created goroutines are mapped dynamically at runtime. This is achieved through Go's own scheduler, which is embedded into every compiled application. Having two separate schedulers (from the operating system and from Go) may have adverse effects on performance, since both schedulers are independent. While it would be possible to assign the highest operating system scheduling priority to the Go process (similar to the approach by <!--\citet{Jestel2013}-->), it would still be difficult to predict the timing behavior of a Go application. Accordingly, Go cannot be used for hard real-time applications in its current state, and its applicability for a soft real-time environment remains to be determined.
 
 At this time it is unfortunately not yet possible to present proper results of a performance comparison between the two languages. This is due to the fact that benchmarking in general is a "notoriously delicate" task. It becomes even more complicated when one is trying to perform so-called micro-benchmarks, where the performance of two short piece of code (as opposed to two applications) written in different languages is to be compared <!--\citep{Gil2011}-->. One of the reasons for this complexity is that it is inherently complicated to write two pieces of code in two different languages, such that both code pieces do exactly the same thing in the most performant way possible. Writing such code requires advanced knowledge of the language, as for example choosing the wrong datastructure in one of the code pieces may result in completely misleading benchmark results, from which false conclusions will be drawn.
 
-<!--\todoin{point out that extensive practical research will have to be carried out in order to determine whether or not the language can be productively used on embedded platforms.}-->
-
-<!--\todoin{Syntactical/Semantical differences as well as performance comparisons, if possible. Context switch time, garbage collection impact, plain performance (e.g. loops) compared to C, all that stuff.}-->
+To summarize it can be said that, while Go is a compiled and statically typed language that has the potential to reach near-C performance, especially the scheduler and memory management model can lead to performance issues when running on embedded hardware. Whether or not Go can be productively used on embedded platforms warrants extensive practical research.
 
 
 
 ## Example: Pipeline Pattern in Go
+
+<!--\todo{intro}-->
+
+The implementation consists of two parts: the initializer and the stages.
+
+<!--\includego{go-pipeline-initializer.go}{go-pipeline-initializer}{The pipeline initializer, which creates the necessary channels, fills the pipeline with some elements and invokes the stages.}-->
+
+<!--\includego{go-pipeline-stages.go}{go-pipeline-stages}{The first pipeline stages multiplies every element by two, the second pipeline stage prints the elements to the console.}-->
 
 
 
@@ -225,6 +228,8 @@ Paralleliserung von Laserscanner und Kamera Datenstromverarbeitung unter Linux m
 
 <!--\todoin{Ausblick: As a result, the impact of Go's garbage collector on application performance will have to be closely evaluated}-->
 
+<!--\todoin{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
+}-->
 
 
 
