@@ -212,37 +212,22 @@ Importantly, the shown pipeline would not have any performance benefit, since th
 <!--\clearpage-->
 # Summary
 
-In this essay, the first steps towards establishing a foundation for my master's thesis were taken. The final goal being the parallelization of a lane guiding control system along with an obstacle detection system on the Xilinx Zynq 7000 MPSoC, these steps consisted of first gaining an understanding of one of the problems, the obstacle detection system. This was necessary to be able to reason about which parallelization techniques could be employed to improve the parallel execution of the system. These considerations were largely based on the categorization and detailed explanations of parallelism techniques provided by <!--\citet{Mattson2004}-->.
+In this essay, the first steps towards establishing a foundation for my master's thesis were taken. The final goal being the parallelization of a lane guiding control system along with an obstacle detection system on the Xilinx Zynq 7000 MPSoC, these steps consisted of first gaining an understanding of one of the problems, the obstacle detection system. This was necessary to be able to reason about which parallelization techniques can be employed to improve the parallel execution of the system. These considerations were largely based on the categorization and detailed explanations of parallelism techniques provided by <!--\citet{Mattson2004}-->, enriched by numerous current research papers.
 
-Two parallelization techniques which, in the author's opinion, are promising candidates to apply on the obstacle detection system are the **pipeline pattern** and the use of the **NEON SIMD engine** available in the ARM Cortex-A9.
+Two parallelization techniques which seem to be promising candidates for application on the obstacle detection system are the pipeline pattern and the use of the NEON SIMD engine available in the ARM Cortex-A9, both of which were presented. An SIMD engine is especially well suited when trying to increase the throughput of dataflow-based application, since these applications need to apply the same operation to a continuous stream of data elements, and an SIMD engine can apply the operations to many data elements in parallel. The pipeline pattern is also a good fit for such applications: by dividing a sequential dataflow problem into pipeline stages running on different cores or CPUs, and letting the data to be processed "flow through" these pipeline stages, parallelism is achieved.
 
-<!--\todoin{Komprimierte Darstellung der wesentlichen Inhalte}-->
-
-<!--\todoin{Ausblick (wie geht es weiter?)}-->
-
-<!--\todoin{Schwarz: Software Engineering for Embedded Systems: Methods, Practical Techniques, and Applications (Expert Guide)? \url{http://goo.gl/vM360}
-}-->
-
-<!--\todoin{Hier im Ausblick erwähnen, dass Performance-Vergleiche anhand eigener Anwendungen folgen, bezogen auf SIMD stuff aber auch Go auf embedded (vs. C/C++)}-->
-
-<!--\todoin{Literatur Recherche zu
-Concurrency und aktuellen MPSOC.
-(Multiprocessor System-on-Chip: Hardware Design and Tool Integration)
-Paralleliserung von Laserscanner und Kamera Datenstromverarbeitung unter Linux mit GO im Wettstreit mit C-Threads-pur.
-}-->
-
-<!--\todoin{Mention that \citep{Herlihy2012} will be used as an additional "fundation work", since it was revised in 2012 and thus is newer, but was not available to the author until now.}-->
-
-<!--\todoin{Ausblick: As a result, the impact of Go's garbage collector on application performance will have to be closely evaluated (also scheduling stuff)}-->
-
-<!--\todoin{Mention that the NEON Alchemy Lab stuff must be confirmed.}-->
-
-<!--\todoin{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
-}-->
-
-<!--\todoin{short essay outlook: In the course of my master seminar, these hypotheses will be evaluated by extracting performance critical elements from the mentioned FAUST application and implementing them in Go and C, using state of the art dataflow parallelization algorithms. These implementations will then be compared to their original (non-parallelized) counterparts, in terms of performance, ease of implementation and implementation complexity.}-->
+Additionally, an overview of the Go programming language was given, which promises enhanced developer productivity and application maintainability due to its built-in concurrency language features. In the domain of highly concurrent applications, especially on large servers, the language is already widely used. While a compiler backend for the ARM platform exists, no research has been made available regarding the usability of Go on embedded MPSoC platforms.
 
 
+<!--\newpage\subsection*{Outlook}-->
+
+In order to proceed, a more detailed evaluation of the state-of-the-art literature will have to be performed. As mentioned, the initial selection of the algorithms was primarily based on the book "Patterns for parallel programming" by <!--\citet{Mattson2004}-->, which is a relatively old source compared to other research papers cited in this essay. While the relevant claims made in the book have been validated through current research, it will be important to take additional, more recent books, such as <!--\citet{Herlihy2012}-->, into account.
+
+In addition to extensive literature research, the hypotheses made in this essay have to be confirmed:
+
+1. That the use of the NEON engine and the pipeline pattern are applicable to the obstacle detection system. In order to confirm this, said system must be rewritten in C and Go, and performance comparisons must then be performed on these implementations, especially compared to the original Java implementation by <!--\citet{Jestel2013}-->.
+
+2. That the Go programming language can in fact be used on embedded systems without significant performance regressions. To this end, the impact of Go's features on embedded platforms under different circumstances must be evaluated. Both the garbage collector and the scheduler, which are part of the Go runtime, are possible performance inhibitors, especially in resource constrained environments. The actual impact of these features must be determined in order to be able to say whether or not it is feasible to use Go in context of the FAUST project. As such, reasonable evaluation criteria must be defined, through which the aptness of the Go obstacle detection system implementation will be assessed.
 
 
 

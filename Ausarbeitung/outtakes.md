@@ -34,6 +34,44 @@ By dividing the sequential application of the filters into stages that each appl
 
 <!--\todoin{Syntactical/Semantical differences as well as performance comparisons, if possible. Context switch time, garbage collection impact, plain performance (e.g. loops) compared to C, all that stuff.}-->
 
+
+
+
+
+<!--\clearpage-->
+# blub
+<!--\todoin{Komprimierte Darstellung der wesentlichen Inhalte}-->
+
+<!--\todoin{Ausblick (wie geht es weiter?)}-->
+
+<!--\todoin{Schwarz: Software Engineering for Embedded Systems: Methods, Practical Techniques, and Applications (Expert Guide)? \url{http://goo.gl/vM360}
+}-->
+
+<!--\todoin{Hier im Ausblick erwähnen, dass Performance-Vergleiche anhand eigener Anwendungen folgen, bezogen auf SIMD stuff aber auch Go auf embedded (vs. C/C++)}-->
+
+<!--\todoin{Literatur Recherche zu
+Concurrency und aktuellen MPSOC.
+(Multiprocessor System-on-Chip: Hardware Design and Tool Integration)
+Paralleliserung von Laserscanner und Kamera Datenstromverarbeitung unter Linux mit GO im Wettstreit mit C-Threads-pur.
+}-->
+
+<!--\todoin{Mention that \citep{Herlihy2012} will be used as an additional "fundation work", since it was revised in 2012 and thus is newer, but was not available to the author until now.}-->
+
+<!--\todoin{Ausblick: As a result, the impact of Go's garbage collector on application performance will have to be closely evaluated (also scheduling stuff)}-->
+
+<!--\todoin{Mention that the NEON Alchemy Lab stuff must be confirmed.}-->
+
+<!--\todoin{Schwarz: The Art of Multiprocessor Programming sollten wir auch auf dem Zettel haben, da hier eine neue Auflage vorliegt. \url{http://goo.gl/TZU73}
+}-->
+
+<!--\todoin{short essay outlook: In the course of my master seminar, these hypotheses will be evaluated by extracting performance critical elements from the mentioned FAUST application and implementing them in Go and C, using state of the art dataflow parallelization algorithms. These implementations will then be compared to their original (non-parallelized) counterparts, in terms of performance, ease of implementation and implementation complexity.}-->
+
+
+
+
+
+
+
 # Gliederungshinweise
 
 
