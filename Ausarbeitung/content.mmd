@@ -91,7 +91,7 @@ Given a single stream of instructions and multiple streams of data, an SIMD arch
 
 As such, SIMD architectures are a good fit for specialized applications that consist of high data parallelism along with little interprocess communication. As an example, in digital signal processing, e.g. decoding a video stream, the situation is common that the same operations need to be applied continously to a large stream of data (in case of a 1080p high-quality H.264 movie, the bitrate is usually above 17Mbit/s). As such, SIMD instruction sets have become a generic feature of most high-end processors because of the possible performance improvements that they can provide <!--\citep{Jang2011}-->.
 
-A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD system. GPUs usually consist of an array of multiprocessors, each in turn consisting of multiple processing units (ALUs), which all share a single control unit (exactly as depicted in <!--\autoref{fig:SIMD}-->). Each of these ALUs is then able to execute instructions provided by the control unit, potentially providing a many-fold performance increase.
+Graphics Processing Units (GPU) are a good example of heavily parallel SIMD systems. GPUs usually consist of an array of multiprocessors, each in turn consisting of multiple processing units (ALUs), which all share a single control unit (exactly as depicted in <!--\autoref{fig:SIMD}-->). Each of these ALUs is then able to execute instructions provided by the control unit, potentially providing a many-fold performance increase.
 
 <!--\fig{SIMD}{Visualization of a Single instruction, multiple data architecture, containing three processing units. Heavily inspired by \citet{Mattson2004}}-->
 
