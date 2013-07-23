@@ -102,7 +102,7 @@ A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD sys
 
 # Parallelization Techniques [techniques]
 
-In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If available, current research based on these techniques will be highlighted. <!--\todo{Perhaps say something about exploitable concurrency}-->
+In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If possible, current research based on these techniques will be highlighted. <!--\todo{Perhaps say something about exploitable concurrency}-->
 
 ## ARM NEON SIMD [arm-neon]
 
@@ -117,8 +117,9 @@ The NEON extension is composed of 32 64-bit registers, which can alternatively b
 A performance comparison conducted by <!--\citet{AlchemyLab2013}--> (not associated with ARM Ltd.) shows that, in case of the NEON engine, pre-loading subsequently needed data into the caches while performing SIMD operations can increase performance by a factor of 2.4 for an example algorithm containing multiplication, addition and divison with rounding (data size about 4MiB). It should be noted that this is the performance increase compared to an implementation that already uses the NEON engine. When comparing the NEON implementation with pre-loading to an implementation in pure C, the performance increase factor is 11.946 (compare <!--\autoref{fig:NEON-benchmark}-->). The algorithm, which does not serve a particular purpose other than benchmarking, is shown in <!--\autoref{code:simd-bench}-->.
 
 <!--\includec{simd-bench.c}{simd-bench}{Algorithm specifically crafted for a performance comparison between C code and the NEON engine. Source: \citet{AlchemyLab2013}}-->
-
 <!--\fig{NEON-benchmark}{Results of a performance comparison conducted by \citet{AlchemyLab2013} (not associated with ARM Ltd.).}-->
+
+This technique will be very useful when parallelizing the obstacle detection system on the Cortex-A9, since processing the raw data from the laser scanner in preparation for the obstacle detection consitutes a dataflow.
 
 
 
@@ -142,12 +143,12 @@ In order for a pipelined computation to have positive performance impact, some i
 
 1. Optimally, each stage takes about the same time to compute. If any pipeline stage completes its calculation much faster, it will be stalled by the subsequent stages, because it cannot pass on the computed data. On the other hand, if any pipeline stage is much slower than the others, subsequent stages will often have to wait for data to arrive, thus wasting computing time.
 
-
+It remains to be evaluated whether or not the pipeline pattern can be used further parallelize the obstacle detection system, since it is not clear yet if the problem can be divided in stages such that the previously stated rules apply.
 
 <!--\fig{pipeline}{A four stage pipeline processing four data elements.
 In the first time frame, only the first pipeline stage is active, processing $\operatorname{Data}_1$ (all other stages are idle). In the second time frame, $\operatorname{Data}_2$ is being processed in stage one, $\operatorname{Data}_1$ in stage two, and so on.}-->
 
-Recent research in this area includes the concept of "pipelets" by <!--\citet{Jahn2013}-->. It describes pipeline stages which are self-organizing, by monitoring computational demands and communication time, and dynamically remapping tasks using the resulting information. As such, pipelets are able to group tasks such that the communication overhead is minimized and bottlenecks are reduced.
+Recent research surrounding the pipeline pattern includes the concept of "pipelets" by <!--\citet{Jahn2013}-->. It describes pipeline stages which are self-organizing, by monitoring computational demands and communication time, and dynamically remapping tasks using the resulting information. As such, pipelets are able to group tasks such that the communication overhead is minimized and bottlenecks are reduced.
 
 Since the pipeline pattern is very well applicable to the concurrency tools built into the Go programming language, a short example implementation of the pattern in Go will be presented in the next section.
 
@@ -174,7 +175,7 @@ The communication between goroutines is realized through channels (the language 
 \includego{channels.go}{gochannels}{Syntactical overview of channel usage in Go.}
 -->
 
-<!--\todo{mention defer? }-->The language includes additional features, which do not deal with concurrency, but have been added for developer convenience. Some of these features include multiple return parameters, slices (which provide a more powerful interface to C-style arrays), garbage collection (which will be discussed in the comparison to C) and built-in dependency management.
+The language includes additional features, which do not deal with concurrency, but have been added for developer convenience. Some of these features include multiple return parameters, slices (which provide a more powerful interface to C-style arrays), garbage collection (which will be discussed in the comparison to C) and built-in dependency management.
 
 
 
@@ -209,6 +210,8 @@ Importantly, the shown pipeline would not have any performance benefit, since th
 
 <!--\clearpage-->
 # Summary
+
+
 
 <!--\todoin{Komprimierte Darstellung der wesentlichen Inhalte}-->
 
