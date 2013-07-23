@@ -8,11 +8,9 @@ latex footer:       x3-paper-end
 
 Embedded platforms and applications are being used throughout many industries, including telecommunication, robotics, medical and automotive <!--\citep{Wang2013}-->. <!--\citet{Campeanu2013}--> states that nowadays it is increasingly common to build embedded systems on heterogenous platforms, containing multiple computational units such as multi-core CPUs, GPUs and FPGAs. If all these components are used to the full extent of their capabilities, such a setup enables better performance than could be previously achieved on embedded platforms.
 
-This is an important shift, since applications running on these platforms become more and more complex, and their performance requirements have to be satisfied. In the past, not only on embedded platforms, this was commonly achieved by boosting processor clock rates. But due to both intractable physical limitations as well as practical engineering considerations and requirements (i.e. low power consumption for a battery-powered devices), increasing processor clock rates is no longer a feasible approach <!--\citep{Cantrill2008}-->.
+This is an important shift, since applications running on these platforms become more and more complex, and their performance requirements have to be satisfied. In the past, not only on embedded platforms, this was commonly achieved by boosting processor clock rates. But due to both intractable physical limitations as well as practical engineering considerations and requirements (i.e. low power consumption for a battery-powered devices), increasing processor clock rates is no longer a feasible approach <!--\citep{Cantrill2008}-->. The performance gains possible on heterogenous embedded platforms are a result of the hardware-level parallelism that is achievable on these platforms. But unfortunately, exploiting these parallelism features still is a considerable challenge, given the tools and programming concepts widely in use today <!--\citep{Wang2013,Cantrill2008}-->.
 
-The performance gains possible on heterogenous embedded platforms are a result of the hardware-level parallelism that is achievable on these platforms. But unfortunately, exploiting these parallelism features still is a considerable challenge, given the tools and programming concepts widely in use today <!--\citep{Wang2013,Cantrill2008}-->.
-
-Because of the mentioned increase in complexity and performance requirements in embedded applications, and considering that clock rates can't be expected to increase significantly anymore, research in the area of concurrent applications has taken an important place in the computer science research community. As a result, an increasing number of publications related to concurrency have been presented over the last 7 years (compare <!--\autoref{fig:concurrency-publications}-->).
+Because of the mentioned increase in complexity and performance requirements in embedded applications, and considering that clock rates can't be expected to increase significantly anymore, research in the area of concurrent applications has taken an important place in the computer science research community. This is the case because developers are now forced to use parallelism in order to improve their program's performance <!--\citep{Dig2011}-->. As a result, an increasing number of publications related to concurrency have been presented over the last 7 years (compare <!--\autoref{fig:concurrency-publications}-->).
 
 <!--\fig{concurrency-publications}{A strong increase in publications related to concurrency can be observed over the last years. These numbers were researched from the \citet{IEEEXplore2013} digital library as well as the \citet{ACMDigitalLibrary2013} digital library.}-->
 
@@ -101,18 +99,20 @@ A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD sys
 
 
 # Parallelization Techniques [techniques]
+<!--\enlargethispage{\baselineskip}-->
 
-In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If possible, current research based on these techniques will be highlighted. <!--\todo{Perhaps say something about exploitable concurrency}-->
+In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If possible, current research based on these techniques will be highlighted.
+
 
 ## ARM NEON SIMD [arm-neon]
 
 The ARM NEON extension is a general-purpose 128-bit SIMD architecture available in ARMv7. It is included in the ARM Cortex-A9 processors that can be found on the Zynq 7000 <!--\citep{Jang2011}-->.
 
-The NEON extension is composed of 32 64-bit registers, which can alternatively be used as 16 128-bit registers. In NEON terminology, a register is a vector of elements of the same data-type (possible data-types are 8-bit to 64-bit signed and unsigned integers as well as single precision floats). Every instruction given to the NEON engine is then performed on all elements of one or more such vectors. A "lane" is the part of all registers which shares the same operation. This process is visualized in <!--\autoref{fig:NEON-SIMD}-->.
-
 <!--\fig{NEON-SIMD}{Visualization of the NEON SIMD data flow. Assuming 64-bit source registers, each of the operands is 16-bit wide. The blue squares represent the operations applied to the registers. Four operations are applied, and thus there are four lanes.}-->
 
-<!--\todo{Add a few standard operations, and maybe a short example}-->Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. This is important since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, because the processor can not perform useful operations while loading memory into the cache.
+The NEON extension is composed of 32 64-bit registers, which can alternatively be used as 16 128-bit registers. In NEON terminology, a register is a vector of elements of the same data-type (possible data-types are 8-bit to 64-bit signed and unsigned integers as well as single precision floats). Every instruction given to the NEON engine is then performed on all elements of one or more such vectors. A "lane" is the part of all registers which shares the same operation. This process is visualized in <!--\autoref{fig:NEON-SIMD}-->.
+
+Even though the NEON engine is realized as part of the ARM core, it has a completely independent execution pipeline and a register bank that is separate from the ARM core register bank <!--\citep{Jang2011}-->. As a result, it is possible to signal the ARM core memory system to pre-load memory (using the `PLD` instruction, see <!--\citet{ARMAssembler2013}-->) while the SIMD engine is computing, so that the data for the next SIMD operation will already be available in the cache. This is important since cache misses can impose a significant performance overhead <!--\citep{Zang2013}-->, because the processor can not perform useful operations while loading memory into the cache.
 
 A performance comparison conducted by <!--\citet{AlchemyLab2013}--> (not associated with ARM Ltd.) shows that, in case of the NEON engine, pre-loading subsequently needed data into the caches while performing SIMD operations can increase performance by a factor of 2.4 for an example algorithm containing multiplication, addition and divison with rounding (data size about 4MiB). It should be noted that this is the performance increase compared to an implementation that already uses the NEON engine. When comparing the NEON implementation with pre-loading to an implementation in pure C, the performance increase factor is 11.946 (compare <!--\autoref{fig:NEON-benchmark}-->). The algorithm, which does not serve a particular purpose other than benchmarking, is shown in <!--\autoref{code:simd-bench}-->.
 
@@ -154,7 +154,7 @@ Since the pipeline pattern is very well applicable to the concurrency tools buil
 
 
 
-
+<!--\pagebreak-->
 # The "Go" programming language [golang]
 
 This section will give a short overview of the programming language "Go", as well as provide a comparison to C, since it is the most common programming language used on embedded platforms <!--\citep{Douglass2011}-->. To wrap up this section, an example implementation of the pipeline pattern will be presented and explained.
