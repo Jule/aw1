@@ -101,7 +101,7 @@ A Graphics Processing Unit (GPU) can also be seen as a heavily parallel SIMD sys
 # Parallelization Techniques [techniques]
 <!--\enlargethispage{\baselineskip}-->
 
-In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. If possible, current research based on these techniques will be highlighted.
+In this section, selected techniques will be explained in context of the concrete problem at hand, that is the parallelization of the obstacle detection system on an ARM Cortex-A9 CPU. Since there are a multitude of techniques, and not enough time available to evaluate all of them, the selection was mostly based on the information provided by <!--\citet{Mattson2004}-->. It is important to note that the presented techniques are drawn from two distinct categories: SIMD and MIMD, and depending on the problem, both of them might be used at the same time, without one of them interfering with the other. Also, if possible, current research based on these techniques will be highlighted.
 
 
 ## ARM NEON SIMD [arm-neon]
@@ -154,7 +154,7 @@ Since the pipeline pattern is very well applicable to the concurrency tools buil
 
 
 
-<!--\pagebreak-->
+
 # The "Go" programming language [golang]
 
 This section will give a short overview of the programming language "Go", as well as provide a comparison to C, since it is the most common programming language used on embedded platforms <!--\citep{Douglass2011}-->. To wrap up this section, an example implementation of the pipeline pattern will be presented and explained.
@@ -211,7 +211,9 @@ Importantly, the shown pipeline would not have any performance benefit, since th
 <!--\clearpage-->
 # Summary
 
+In this essay, the first steps towards establishing a foundation for my master's thesis were taken. The final goal being the parallelization of a lane guiding control system along with an obstacle detection system on the Xilinx Zynq 7000 MPSoC, these steps consisted of first gaining an understanding of one of the problems, the obstacle detection system. This was necessary to be able to reason about which parallelization techniques could be employed to improve the parallel execution of the system. These considerations were largely based on the categorization and detailed explanations of parallelism techniques provided by <!--\citet{Mattson2004}-->.
 
+Two parallelization techniques which, in the author's opinion, are promising candidates to apply on the obstacle detection system are the **pipeline pattern** and the use of the **NEON SIMD engine** available in the ARM Cortex-A9.
 
 <!--\todoin{Komprimierte Darstellung der wesentlichen Inhalte}-->
 
